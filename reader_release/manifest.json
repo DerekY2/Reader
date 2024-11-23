@@ -1,0 +1,50 @@
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Reader.",
+  
+  "short_name": "Reader.",
+
+  "version": "1.0",
+  
+  "description": "Reader Mode for Chrome",
+
+  
+  "icons": {
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
+
+  "permissions": [ "activeTab", "contextMenus", "storage", "scripting" ],
+
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; 'unsafe-inline' 'self'"
+  },
+
+  "action": {
+    "default_title": "Reader.",
+    "default_icon": "assets/images/icon128.png"
+  },
+  
+  "background": {
+    "service_worker": "javascripts/background.js"
+  },
+
+  "web_accessible_resources": [{
+    "resources": [
+      "*.html",
+      "webfonts/*",
+      "*.woff2",
+      "*.tff",
+      "assets/*",
+      "javascripts/*",
+      "styles/*",
+      "css/fontawesome-all.css",
+      "webfonts/fa-regular-400.woff2",
+      "webfonts/fa-brands-400.ttf"
+    ],
+    "matches": ["<all_urls>"]
+  }]
+}
