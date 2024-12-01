@@ -743,6 +743,39 @@ function popupwindow(url, title, w, h) {
 //   })
 // }
 
+function saveSessionValue(key, val) {
+  chrome.storage.session.get(key, function(result) {
+      if (chrome.runtime.lastError) {
+          console.error("Error retrieving key:", key, chrome.runtime.lastError);
+          return;
+      }
+
+      const original = result[key]; // Retrieve the current value
+      if (original !== val) { // Only update if the value is different
+          console.log("About to save - ", original, " ==> ", val);
+
+          chrome.storage.session.set({ [key]: val }, function() {
+              if (chrome.runtime.lastError) {
+                  console.error("Error saving value:", key, chrome.runtime.lastError);
+              } else {
+                  console.log("Value saved successfully for", key, ":", val);
+
+                  // Verify the saved value
+                  chrome.storage.session.get(key, function(newResult) {
+                      if (chrome.runtime.lastError) {
+                          console.error("Error verifying saved value:", chrome.runtime.lastError);
+                      } else {
+                          console.log("Saved value for",key,"verified:\noriginal:", original, "\nnew:", newResult[key]);
+                      }
+                  });
+              }
+          });
+      } else {
+          console.log("No change detected. Value not updated for key:", key);
+      }
+  });
+}
+
 function saveStorageValue(key, val) {
   chrome.storage.sync.get(key, function(result) {
       if (chrome.runtime.lastError) {
@@ -2362,35 +2395,64 @@ function init(){
     alert("Something went wrong... " + err)
   });
 }
-
 var latest_url;
+var readerActive
+// function launch() {
+//   console.log('existing iframe - ', readerActive)
+//   // Detect past iframe - don't show another
+//   if (document.getElementById("cr-iframe") == null) {
+//     // Create iframe and append to body
+//     iframe = createIframe();
+//     document.body.appendChild(iframe);
+//     readerActive = true
+//     latest_url = window.location.href;
+//     init();
+    
+//     console.log("created iframe - ", iframe);
+//   } else {
+//     // If iframe is already present, remove it
+//     //removeIframe();
+//     readerActive = false
+//     iframe = document.getElementById("cr-iframe");
+//     if($(iframe).is(':visible')){
+//       $(iframe).fadeOut();
+//     } else {
+//       // Only parse the article if the url was changed
+//       if (latest_url == window.location) {
+//         $(iframe).fadeIn();
+//       } else {
+//         latest_url = window.location.href;
+//         init();
+//       }
+//     }
+//     console.log("removed iframe - ", iframe);
+//   }
+// }
+
 function launch() {
 
-  // Detect past iframe - don't show another
-  if(document.getElementById("cr-iframe") == null) {
+  // Detect past iframe - don't create another
+  if(document.getElementById("cr-iframe") == null || window == window.top) {
+    $("#cr-iframe").remove()
     // Create iframe and append to body
     var iframe = createIframe();
     document.body.appendChild(iframe);
 
     latest_url = window.location.href;
     init();
-    console.log("created iframe - ", iframe)
-  } 
-  else {
-    removeIframe(iframe)
-    
-    // iframe = document.getElementById("cr-iframe");
-    // if($(iframe).is(':visible')){
-    //   $(iframe).fadeOut();
-    // } else {
-    //   // Only parse the article if the url was changed
-    //   if (latest_url == window.location) {
-    //     $(iframe).fadeIn();
-    //   } else {
-    //     latest_url = window.location.href;
-    //     init();
-    //   }
-    // }
+  } else {
+    iframe = document.getElementById("cr-iframe");
+    if($(iframe).is(':visible')){
+      $(iframe).fadeOut();
+    } else {
+      // Only parse the article if the url was changed
+      if (latest_url == window.location) {
+        $(iframe).fadeIn();
+      } else {
+        latest_url = window.location.href;
+        init();
+      }
+    }
   }
 
 }
@@ -2414,7 +2476,7 @@ function createIframe(){
 
   preloader = getPreloader();
   $(iframe).contents().find('body').html(preloader);
-  console.log(iframe)
+  //console.log(iframe)
   return iframe;
 }
 

@@ -7,7 +7,7 @@
   
   "short_name": "Reader.",
 
-  "version": "1.0",
+  "version": "1.1",
   
   "description": "Reader Mode for Chrome",
 
@@ -17,11 +17,16 @@
     "128": "assets/images/icon128.png"
   },
 
-  "permissions": [ "activeTab", "contextMenus", "storage", "scripting" ],
+  "permissions": [ "activeTab", 
+                   "contextMenus", 
+                   "storage", 
+                   "scripting"],
 
   "content_security_policy": {
     "sandbox": "sandbox allow-scripts; 'unsafe-inline' 'self'"
   },
+
+  "host_permissions": ["<all_urls>"],
 
   "action": {
     "default_title": "Reader.",
@@ -29,7 +34,8 @@
   },
   
   "background": {
-    "service_worker": "javascripts/background.js"
+    "service_worker": "javascripts/background.js",
+    "type": "module"
   },
 
   "web_accessible_resources": [{
