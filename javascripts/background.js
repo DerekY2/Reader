@@ -18,11 +18,11 @@ chrome.action.onClicked.addListener((e => {
   i(e)
 })), chrome.contextMenus.create({
   id: "view-selection",
-  title: "View in Reader",
+  title: "View in Reader.",
   contexts: ["selection"]
 }), linkCMId = chrome.contextMenus.create({
   id: "view-linked-page",
-  title: "View the linked page using ReaderMode",
+  title: "View linked page using Reader.",
   contexts: ["link"]
 }), chrome.contextMenus.onClicked.addListener((function(e) {
   "view-selection" == e.menuItemId ? chrome.tabs.query({
