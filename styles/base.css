@@ -39,13 +39,13 @@
 .tlite{background:#111;color:#fff;font-family:sans-serif;font-size:.8rem;font-weight:400;text-decoration:none;text-align:left;padding:.6em .75rem;border-radius:4px;position:absolute;opacity:0;visibility:hidden;transition:opacity .4s;white-space:nowrap;box-shadow:0 .5rem 1rem -.5rem #000;z-index:1000;-webkit-backface-visibility:hidden}.tlite-table td,.tlite-table th{position:relative}.tlite-visible{visibility:visible;opacity:.9}.tlite::before{content:' ';display:block;background:inherit;width:10px;height:10px;position:absolute;transform:rotate(45deg)}.tlite-n::before{top:-3px;left:50%;margin-left:-5px}.tlite-nw::before{top:-3px;left:10px}.tlite-ne::before{top:-3px;right:10px}.tlite-s::before{bottom:-3px;left:50%;margin-left:-5px}.tlite-se::before{bottom:-3px;right:10px}.tlite-sw::before{bottom:-3px;left:10px}.tlite-w::before{left:-3px;top:50%;margin-top:-5px}.tlite-e::before{right:-3px;top:50%;margin-top:-5px}
 
 /***** Message Popup *****/
-#cr-message{font-family:"Helvetica Neue",Helvetica,Verdana,Arial,sans-serif!important;position:fixed!important;top:0!important;left:0!important;right:0!important;padding:20px!important;background:#333!important;color:#fff!important;text-align:center!important;font-size:16px!important;z-index:1100007!important}
+#reader-ext-message{font-family:"Helvetica Neue",Helvetica,Verdana,Arial,sans-serif!important;position:fixed!important;top:0!important;left:0!important;right:0!important;padding:20px!important;background:#333!important;color:#fff!important;text-align:center!important;font-size:16px!important;z-index:1100007!important}
 
 /***** Hide elements *****/
-#cr-iframe .hidden{display: none;}
+#reader-ext-iframe .hidden{display: none;}
 
 /***** Pre tags for codes *****/
-#cr-content-container pre{
+#reader-ext-content-container pre{
   display: block;
   padding: 9.5px;
   margin: 0 0 10px;
@@ -61,13 +61,13 @@
 }
 
 /***** Max-width for all elements *****/
-#cr-content-container *{
+#reader-ext-content-container *{
   max-width: 100%;
 }
 
 /***** Hide elements for printing *****/
 @media print{
-  #cr-body .no-print{
+  #reader-ext-body .no-print{
     display:none !important;
   }
 }

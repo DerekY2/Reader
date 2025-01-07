@@ -1,72 +1,72 @@
 var title, excerpt, content,article_url,author,reading_time,tag_list, lastLogTime;
 
 // Settings
-var cr_theme = "custom-theme";
-var cr_font_family = "Arial";
-var cr_font_size = 16;
-var cr_line_height = 1;
-var cr_letter_space = 0;
-var cr_max_width = 680;
-var cr_default_css = `
-  #cr-body {
+var reader_ext_theme = "custom-theme";
+var reader_ext_font_family = "Arial";
+var reader_ext_font_size = 16;
+var reader_ext_line_height = 1;
+var reader_ext_letter_space = 0;
+var reader_ext_max_width = 680;
+var reader_ext_default_css = `
+  #reader-ext-body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 14px;
   }
 
-  #cr-body a{
+  #reader-ext-body a{
     text-decoration: none;
   }
 
-  #cr-meta{
+  #reader-ext-meta{
   }
 
-  #cr-outline{
+  #reader-ext-outline{
     width: 250px;
     position: fixed;
     top: 65px;
     left: 30px;
   }
 
-  #cr-content-wrapper a{
+  #reader-ext-content-wrapper a{
     text-decoration: underline;
   }
 
-  h1#cr-title,
-  #cr-content h1,
-  #cr-content h2,
-  #cr-content h3,
-  #cr-content h4,
-  #cr-content h5,
-  #cr-content h6 {
+  h1#reader-ext-title,
+  #reader-ext-content h1,
+  #reader-ext-content h2,
+  #reader-ext-content h3,
+  #reader-ext-content h4,
+  #reader-ext-content h5,
+  #reader-ext-content h6 {
     font-weight: 700;
     line-height: 1.3em;
     font-family: inherit;
     margin-top: 1.6em;
     margin-bottom: 0.8em;
   }
-  #cr-content #cr-title{
+  #reader-ext-content #reader-ext-title{
     margin-top: 40px;
   }
-  #cr-content p{
+  #reader-ext-content p{
     word-break: break-word;
     margin-top: 1.5em;
     margin-bottom: 1.5em;
   }
-  #cr-content figure{
+  #reader-ext-content figure{
     padding: 0;
     margin: 0;
   }
-  #cr-content img{
+  #reader-ext-content img{
     max-width: 100% !important;
     height: auto !important;
     margin: 30px auto;
     display: block;
   }
-  #cr-content table{
+  #reader-ext-content table{
     border-spacing: 0px;
     border-collapse: collapse;
   }
-  #cr-content table td, #cr-content table th {
+  #reader-ext-content table td, #reader-ext-content table th {
     text-align: left;
     font-size: 14px;
     border-width: 1px;
@@ -75,11 +75,11 @@ var cr_default_css = `
     border-image: initial;
     padding: 17px;
   }
-  #cr-content blockquote {
+  #reader-ext-content blockquote {
     text-decoration: none;
     opacity: 0.7;
   }
-  #cr-content blockquote:before {
+  #reader-ext-content blockquote:before {
     content: '\e244';
     font-family: 'Material Icons';
     float: left;
@@ -106,36 +106,36 @@ var cr_default_css = `
     background-color: transparent;
   }
 `;
-var cr_background_color_light = "#FFFFFF";
-var cr_text_color_light = "#333333";
-var cr_link_color_light = "#5F6368";
-var cr_background_color_dark = "#35363a";
+var reader_ext_background_color_light = "#FFFFFF";
+var reader_ext_text_color_light = "#333333";
+var reader_ext_link_color_light = "#5F6368";
+var reader_ext_background_color_dark = "#35363a";
 var default_background_color_dark = "#35363a"
 var default_background_color_light = "#e6e6e6"
 var default_text_color_light = "#333333";
 var default_link_color_light = "#5F6368"
 var default_text_color_dark = "#E0E0E0"
 var default_linkcolor_dark = "#FFFFFF"
-var cr_foreground_color_light = "#e6e6e6"
-var cr_foreground_color_dark = "#464545"
-var cr_background_w_color_dark = "#464545"
+var reader_ext_foreground_color_light = "#e6e6e6"
+var reader_ext_foreground_color_dark = "#464545"
+var reader_ext_background_w_color_dark = "#464545"
 var default_foreground_color_light = "#FFFFFF"
 var default_foreground_color_dark = "#464545"
-var cr_text_color_dark = "#E0E0E0";
-var cr_link_color_dark = "#FFFFFF";
-var cr_background_color = "#F8F1E3";
-var cr_foreground_color = "#FFFFFF"
-var cr_text_color = "#333333";
-var cr_link_color = "#5F6368";
-var cr_theme;
-var cr_theme_sync;
-var cr_dark_panel = "on";
-var cr_display_footer = "on";
-var cr_display_outline = "off";
-var cr_display_images = "on";
-var cr_display_meta = "on";
-var cr_display_author = "on";
-var cr_display_reading_time = "on";
+var reader_ext_text_color_dark = "#E0E0E0";
+var reader_ext_link_color_dark = "#FFFFFF";
+var reader_ext_background_color = "#F8F1E3";
+var reader_ext_foreground_color = "#FFFFFF"
+var reader_ext_text_color = "#333333";
+var reader_ext_link_color = "#5F6368";
+var reader_ext_theme;
+var reader_ext_theme_sync;
+var reader_ext_dark_panel = "on";
+var reader_ext_display_footer = "on";
+var reader_ext_display_outline = "off";
+var reader_ext_display_images = "on";
+var reader_ext_display_meta = "on";
+var reader_ext_display_author = "on";
+var reader_ext_display_reading_time = "on";
 
 var font_family_changed;
 var font_size_changed;
@@ -187,7 +187,6 @@ function showPalette(show, doc){
     $(doc).find("#options-foreground-color").hide();
     $(doc).find("#options-text-color").hide();
     $(doc).find("#options-link-color").hide();
-    console.log("hidden")
   }
 
   else if(show){
@@ -195,7 +194,6 @@ function showPalette(show, doc){
       $(doc).find("#options-foreground-color").show();
       $(doc).find("#options-text-color").show();
       $(doc).find("#options-link-color").show();
-      console.log("showed")
   }
 };
 
@@ -240,7 +238,7 @@ function isEmpty(value) {
 
 // Toggle display outline
 function outlineDisplayToggle(doc) {
-  var outline = $(doc).find("#cr-outline");
+  var outline = $(doc).find("#reader-ext-outline");
 
   // Hide Sidebar when the first page reload if mobile
   var width = $(window).width();
@@ -269,13 +267,13 @@ function outlineDisplayToggle(doc) {
 
 // Return preloader html
 function getPreloader(){
-  var preloader = `<div id='cr-pre-loader' style='
+  var preloader = `<div id='reader-ext-pre-loader' style='
       width: 250px;
       height: 100px;
       text-align: center;
       font-family: "Helvetica Neue";
       font-weight: 200;
-      color: #c1c1c1;
+      color:rgb(56, 56, 56);
       letter-spacing: 0.5;
       position: absolute;
       left: 50%;
@@ -314,7 +312,6 @@ function rateLimitLog(message, val) {
   const currentTime = Date.now();
   
   if (currentTime - lastLogTime >= 1000) { // Check if one second has passed
-    console.log(message, val);
     lastLogTime = currentTime; // Update last log time
   }
   else if(lastLogTime == null){
@@ -388,8 +385,8 @@ function getParsedArticle(){
 
 // Remove unnecassary stuffs from content
 function trimContent(doc){
-  $(doc).find("#cr-content span:contains('Image copyright')").css("display","none");
-  $(doc).find("#cr-content figcaption").css("display","none");
+  $(doc).find("#reader-ext-content span:contains('Image copyright')").css("display","none");
+  $(doc).find("#reader-ext-content figcaption").css("display","none");
 }
 
 // Turn title/text into url friendly slug
@@ -405,12 +402,12 @@ function slugify(text){
 // Set Outline list
 function setOutline(doc, article) {
   if (article.title && article.title != "") {
-    $(doc).find("#cr-outline-list").append("<li><a href='#cr-title'>"+article.title+"</a></li>");
+    $(doc).find("#reader-ext-outline-list").append("<li><a href='#reader-ext-title'>"+article.title+"</a></li>");
   }
   $(article.content).find("h1, h2, h3, h4, h5, h6").each(function(){
     var heading = $(this).text();
     var slug = slugify(heading);
-    $(doc).find("#cr-outline-list").append("<li><a href='#"+slug+"'>"+heading+"</a></li>");
+    $(doc).find("#reader-ext-outline-list").append("<li><a href='#"+slug+"'>"+heading+"</a></li>");
   });
 }
 
@@ -420,7 +417,7 @@ function setHeadingsForOutline(doc){
     var heading = $(this).text();
     var slug = slugify(heading);
 
-    if ( $(this).attr("id") != "cr-title" ) {
+    if ( $(this).attr("id") != "reader-ext-title" ) {
       $(this).attr("id", slug)
     }
   });
@@ -437,7 +434,7 @@ function addStyleTags(doc){
   style_url = chrome.runtime.getURL("styles/options-panel.css");
   $(doc).find('head').append("<link rel='stylesheet' type='text/css' href='"+style_url+"'>");
 
-  style_url = chrome.runtime.getURL("styles/fontawesome-all.css");
+  style_url = chrome.runtime.getURL("styles/boxicons-2.1.4/css/boxicons.css");
   $(doc).find('head').append("<link rel='stylesheet' type='text/css' href='"+style_url+"'>");
 
   style_url = chrome.runtime.getURL("styles/tag-it.css");
@@ -485,7 +482,7 @@ function optionsManualScroll(doc){
 var deleted_elements = [];
 var last_element;
 function startDeleteElement(doc) {
-  var content_container = $(doc).find("#cr-content-container");
+  var content_container = $(doc).find("#reader-ext-content-container");
   var mouseFunc = function (e) {
     var selected = e.target;
 
@@ -554,13 +551,13 @@ var selectedContent;
 var range;
 var rect;
 function toolbarDisplayToggle(doc) {
-  $(doc).find("#cr-content-container").mouseup(function(event) {
+  $(doc).find("#reader-ext-content-container").mouseup(function(event) {
     selection = doc.getSelection();
 
     if ( (selection.type === 'Range') &&
       !$(event.target).hasClass("tlite") &&
       !$(event.target).hasClass("no-close") &&
-      ( $(event.target).attr("id") != "cr-toolbar-note-form-textarea" )
+      ( $(event.target).attr("id") != "reader-ext-toolbar-note-form-textarea" )
     ) {
       selectedContent = selection.toString();
       range = selection.getRangeAt(0).cloneRange();
@@ -568,21 +565,21 @@ function toolbarDisplayToggle(doc) {
 
       showToolbar(rect, doc);
     } else {
-      var toolbar_id = "cr-toolbar";
+      var toolbar_id = "reader-ext-toolbar";
       var parent = $(event.target).parent();
       if ( ($(event.target).attr("id") != toolbar_id) &&
         ($(parent).attr("id") != toolbar_id) &&
         ($(parent).parent().attr("id") != toolbar_id)
       ) {
-        $(doc).find("#cr-toolbar").hide();
-        $(doc).find("#cr-toolbar-note-form").hide();
+        $(doc).find("#reader-ext-toolbar").hide();
+        $(doc).find("#reader-ext-toolbar-note-form").hide();
       }
     }
   });
 }
 function showToolbar(rect, doc) {
   // toolbar element only create once
-  var toolbar = doc.getElementById("cr-toolbar");
+  var toolbar = doc.getElementById("reader-ext-toolbar");
 
   // caculate the position of toolbar
   var toolbarWidth = toolbar.offsetWidth;
@@ -602,15 +599,15 @@ function showToolbar(rect, doc) {
   $(toolbar).show();
 }
 function toolbarNoteFormToggle(doc){
-  $(doc).find("#cr-toolbar-note").click(function(e){
-    $(doc).find("#cr-toolbar-note-form").toggle();
+  $(doc).find("#reader-ext-toolbar-note").click(function(e){
+    $(doc).find("#reader-ext-toolbar-note-form").toggle();
   });
 }
 function toolbarActionsHandler(doc){
   
 
   // Translate
-  $(doc).find("#cr-toolbar-translate").click(function(){
+  $(doc).find("#reader-ext-toolbar-translate").click(function(){
     if (selectedContent != ""){
       translateText(doc, selectedContent);
     } else {
@@ -619,7 +616,7 @@ function toolbarActionsHandler(doc){
   });
 
   // Search
-  $(doc).find("#cr-toolbar-search").click(function(){
+  $(doc).find("#reader-ext-toolbar-search").click(function(){
     if (selectedContent != ""){
       searchText(selectedContent);
     } else {
@@ -628,7 +625,7 @@ function toolbarActionsHandler(doc){
   });
 
   // Share to Twitter
-  $(doc).find("#cr-toolbar-share-twitter").click(function(){
+  $(doc).find("#reader-ext-toolbar-share-twitter").click(function(){
     if (selectedContent != ""){
       shareTwitter(selectedContent);
     } else {
@@ -732,12 +729,12 @@ function popupwindow(url, title, w, h) {
 //   chrome.storage.sync.get(k, function(result){
 //     original = result[k]
 //     if(original !=val || !result){
-//       console.log("About to save - ",original," ==> ", val)
+//       //console.log("About to save - ",original," ==> ", val)
 //       chrome.storage.sync.set({[k]: val});
 //       if(!result){
-//         console.log("No data for ",k)
+//         //console.log("No data for ",k)
 //       }
-//       chrome.storage.sync.get(k, function(result){newValue = result;console.log("Saved value: \noriginal: ", original, "\nnew: ",newValue)})
+//       chrome.storage.sync.get(k, function(result){newValue = result;//console.log("Saved value: \noriginal: ", original, "\nnew: ",newValue)})
       
 //     }
 //   })
@@ -752,26 +749,25 @@ function saveSessionValue(key, val) {
 
       const original = result[key]; // Retrieve the current value
       if (original !== val) { // Only update if the value is different
-          console.log("About to save - ", original, " ==> ", val);
 
           chrome.storage.session.set({ [key]: val }, function() {
               if (chrome.runtime.lastError) {
                   console.error("Error saving value:", key, chrome.runtime.lastError);
               } else {
-                  console.log("Value saved successfully for", key, ":", val);
+                  //console.log("Value saved successfully for", key, ":", val);
 
                   // Verify the saved value
                   chrome.storage.session.get(key, function(newResult) {
                       if (chrome.runtime.lastError) {
                           console.error("Error verifying saved value:", chrome.runtime.lastError);
                       } else {
-                          console.log("Saved value for",key,"verified:\noriginal:", original, "\nnew:", newResult[key]);
+                          //console.log("Saved value for",key,"verified:\noriginal:", original, "\nnew:", newResult[key]);
                       }
                   });
               }
           });
       } else {
-          console.log("No change detected. Value not updated for key:", key);
+          //console.log("No change detected. Value not updated for key:", key);
       }
   });
 }
@@ -785,26 +781,26 @@ function saveStorageValue(key, val) {
 
       const original = result[key]; // Retrieve the current value
       if (original !== val) { // Only update if the value is different
-          console.log("About to save - ", original, " ==> ", val);
+          //console.log("About to save - ", original, " ==> ", val);
 
           chrome.storage.sync.set({ [key]: val }, function() {
               if (chrome.runtime.lastError) {
                   console.error("Error saving value:", key, chrome.runtime.lastError);
               } else {
-                  console.log("Value saved successfully for", key, ":", val);
+                  //console.log("Value saved successfully for", key, ":", val);
 
                   // Verify the saved value
                   chrome.storage.sync.get(key, function(newResult) {
                       if (chrome.runtime.lastError) {
                           console.error("Error verifying saved value:", chrome.runtime.lastError);
                       } else {
-                          console.log("Saved value for",key,"verified:\noriginal:", original, "\nnew:", newResult[key]);
+                          //console.log("Saved value for",key,"verified:\noriginal:", original, "\nnew:", newResult[key]);
                       }
                   });
               }
           });
       } else {
-          console.log("No change detected. Value not updated for key:", key);
+          //console.log("No change detected. Value not updated for key:", key);
       }
   });
 }
@@ -813,51 +809,51 @@ function saveStorageValue(key, val) {
 function setFontFamily(doc, val, save) {
   if(previousFontFamily == null){
     previousFontFamily = val;
-    console.log("Font family: No previous data! Setting to - ", previousFontFamily)
+    //console.log("Font family: No previous data! Setting to - ", previousFontFamily)
     showStyleSave(doc)
   }
   else if(previousFontFamily != val){
     font_family_changed = true;
-    console.log("Font family: Change detected! Marked as changed! Previous:",previousFontFamily," New:",status)
+    //console.log("Font family: Change detected! Marked as changed! Previous:",previousFontFamily," New:",status)
     showStyleSave(doc)
   }
   else if(previousFontFamily == val){
     font_family_changed = false;
-    console.log("Font family: No change detected! Marked as unchanged! Previous:",previousFontFamily," New:",status)
+    //console.log("Font family: No change detected! Marked as unchanged! Previous:",previousFontFamily," New:",status)
     showStyleSave(doc)
   }
 
-    cr_font_family = val;
+    reader_ext_font_family = val;
     if(save){
-    saveStorageValue('cr_font_family', val);
+    saveStorageValue('reader_ext_font_family', val);
     }
-  $(doc).find('#cr-content-container').css( "font-family", val );
+  $(doc).find('#reader-ext-content-container').css( "font-family", val );
   $(doc).find(`#options-font-family select option[value='${val}']`).prop('selected', true);
 }
 function setFontSize(doc, val, save) {
   
   if(previousFontSize == null){
     previousFontSize = val;
-    console.log("Font size: No previous data! Setting to - ", previousFontSize)
+    //console.log("Font size: No previous data! Setting to - ", previousFontSize)
     showStyleSave(doc)
   }
   else if(previousFontSize != val){
     font_size_changed = true;
-    console.log("Font size: Change detected! Marked as changed! Previous:",previousFontSize," New:",status)
+    //console.log("Font size: Change detected! Marked as changed! Previous:",previousFontSize," New:",status)
     showStyleSave(doc)
   }
   else if(previousFontSize == val){
     font_size_changed = false;
-    console.log("Font size: No change detected! Marked as unchanged! Previous:",previousFontSize," New:",status)
+    //console.log("Font size: No change detected! Marked as unchanged! Previous:",previousFontSize," New:",status)
     showStyleSave(doc)
   }
 
 
-    cr_font_size = val;
+    reader_ext_font_size = val;
     if(save){
-    saveStorageValue('cr_font_size', val);
+    saveStorageValue('reader_ext_font_size', val);
     }
-  $(doc).find("#cr-content-container").css( "font-size", val );
+  $(doc).find("#reader-ext-content-container").css( "font-size", val );
   $(doc).find("#options-font-size input").val(  val );
   $(doc).find("#options-font-size .val").text(  val );
 }
@@ -865,25 +861,25 @@ function setLineHeight(doc, val, save) {
 
   if(previousLineHeight == null){
     previousLineHeight = val;
-    console.log("Line height: No previous data! Setting to - ", previousLineHeight)
+    //console.log("Line height: No previous data! Setting to - ", previousLineHeight)
     showStyleSave(doc)
   }
   else if(previousLineHeight != val){
     line_height_changed = true;
-    console.log("Line height: Change detected! Marked as changed! Previous:",previousLineHeight," New:",status)
+    //console.log("Line height: Change detected! Marked as changed! Previous:",previousLineHeight," New:",status)
     showStyleSave(doc)
   }
   else if(previousLineHeight == val){
     line_height_changed = false;
-    console.log("Line height: No change detected! Marked as unchanged! Previous:",previousLineHeight," New:",status)
+    //console.log("Line height: No change detected! Marked as unchanged! Previous:",previousLineHeight," New:",status)
     showStyleSave(doc)
   }
 
-    cr_line_height = val;
+    reader_ext_line_height = val;
     if(save){
-    saveStorageValue('cr_line_height', val);
+    saveStorageValue('reader_ext_line_height', val);
     }
-  $(doc).find("#cr-content-container").css( "line-height", val );
+  $(doc).find("#reader-ext-content-container").css( "line-height", val );
   $(doc).find("#options-line-height input").val(  val );
   $(doc).find("#options-line-height .val").text(  val );
 }
@@ -891,25 +887,25 @@ function setLetterSpace(doc, val, save) {
 
   if(previousLetterSpace == null){
     previousLetterSpace = val;
-    console.log("Letter space: No previous data! Setting to - ", previousLetterSpace)
+    //console.log("Letter space: No previous data! Setting to - ", previousLetterSpace)
     showStyleSave(doc)
   }
   else if(previousLetterSpace != val){
     letter_space_changed = true;
-    console.log("Letter space: Change detected! Marked as changed! Previous:",previousLetterSpace," New:",status)
+    //console.log("Letter space: Change detected! Marked as changed! Previous:",previousLetterSpace," New:",status)
     showStyleSave(doc)
   }
   else if(previousLetterSpace == val){
     letter_space_changed = false;
-    console.log("Letter space: No change detected! Marked as unchanged! Previous:",previousLetterSpace," New:",status)
+    //console.log("Letter space: No change detected! Marked as unchanged! Previous:",previousLetterSpace," New:",status)
     showStyleSave(doc)
   }
 
-    cr_letter_space = val;
+    reader_ext_letter_space = val;
     if(save){
-    saveStorageValue('cr_letter_space', val);
+    saveStorageValue('reader_ext_letter_space', val);
     }
-  $(doc).find("#cr-content-container").css( "letter-spacing", val );
+  $(doc).find("#reader-ext-content-container").css( "letter-spacing", val );
   $(doc).find("#options-letter-space input").val(  val );
   $(doc).find("#options-letter-space .val").text(  val );
 }
@@ -917,27 +913,27 @@ function setMaxWidth(doc, val, save) {
   
   if(previousMaxWidth == null){
     previousMaxWidth = val;
-    console.log("Max width: No previous data! Setting to - ", previousMaxWidth)
+    //console.log("Max width: No previous data! Setting to - ", previousMaxWidth)
     showStyleSave(doc)
   }
   else if(previousMaxWidth != val){
     max_width_changed = true;
-    console.log("Max width: Change detected! Marked as changed! Previous:",previousMaxWidth," New:",status)
+    //console.log("Max width: Change detected! Marked as changed! Previous:",previousMaxWidth," New:",status)
     showStyleSave(doc)
   }
   else if(previousMaxWidth == val){
     max_width_changed = false;
-    console.log("Max width: No change detected! Marked as unchanged! Previous:",previousMaxWidth," New:",status)
+    //console.log("Max width: No change detected! Marked as unchanged! Previous:",previousMaxWidth," New:",status)
     showStyleSave(doc)
   }
 
-    cr_max_width = val;
+    reader_ext_max_width = val;
     if(save){
-    saveStorageValue('cr_max_width', val);
+    saveStorageValue('reader_ext_max_width', val);
     }
 
-  cr_max_width = val;
-  $(doc).find("#cr-container").css( "max-width", val );
+  reader_ext_max_width = val;
+  $(doc).find("#reader-ext-container").css( "max-width", val );
   $(doc).find("#options-max-width .val").attr( "value", val );
   $(doc).find("#options-max-width .val").text(  val );
 }
@@ -946,51 +942,51 @@ function setBackgroundColor(doc, val, theme, save) {
   
 
   if (theme == "light-theme") {
-    cr_background_color_light = default_background_color_light;
+    reader_ext_background_color_light = default_background_color_light;
 
-    console.log("set background color to ", default_background_color_light)
-    saveStorageValue('cr_background_color_light', default_background_color_light);
+    //console.log("set background color to ", default_background_color_light)
+    saveStorageValue('reader_ext_background_color_light', default_background_color_light);
     if(save){
-      saveStorageValue('cr_background_color_light', default_background_color_light);
+      saveStorageValue('reader_ext_background_color_light', default_background_color_light);
     }
   } 
   else if (theme == "dark-theme"){
-    cr_background_color_dark = default_background_color_dark;
-    console.log("set background color to ", val)
+    reader_ext_background_color_dark = default_background_color_dark;
+    //console.log("set background color to ", val)
  
     if(save){
-      saveStorageValue('cr_background_color_dark', default_background_color_dark);
+      saveStorageValue('reader_ext_background_color_dark', default_background_color_dark);
     }
   } 
   else if (theme == "custom-theme"){
-    cr_background_color = val;
+    reader_ext_background_color = val;
 
     if(previousBackgroundColor == null){
       previousBackgroundColor = val;
-      console.log("Background Color: No previous data! Setting to - ", previousBackgroundColor)
+      //console.log("Background Color: No previous data! Setting to - ", previousBackgroundColor)
       showThemeSave(doc)
   
     }
     else if(previousBackgroundColor != val){
       background_color_changed = true;
-      console.log("Background Color: Change detected! Marked as changed! Previous:",previousBackgroundColor," New:",val)
+      //console.log("Background Color: Change detected! Marked as changed! Previous:",previousBackgroundColor," New:",val)
       showThemeSave(doc)
     }
     else if(previousBackgroundColor == val){
       background_color_changed = false;
-      console.log("Background Color: No change detected! Marked as unchanged! Previous:",previousBackgroundColor," New:",val)
+      //console.log("Background Color: No change detected! Marked as unchanged! Previous:",previousBackgroundColor," New:",val)
       showThemeSave(doc)
     }
  
     rateLimitLog("set background color to ", val)
     if(save){
-    saveStorageValue('cr_background_color', val);
-    console.log("stored custom color ", val)
+    saveStorageValue('reader_ext_background_color', val);
+    //console.log("stored custom color ", val)
     }
   } else {
   }
 
-  $(doc).find("#cr-body").css( "background-color", val );
+  $(doc).find("#reader-ext-body").css( "background-color", val );
  
   $(doc).find("#options-theme ul li a[data-theme='"+theme+"']").css("background-color", val);
 
@@ -1002,45 +998,45 @@ function setBackgroundColor(doc, val, theme, save) {
 function setForegroundColor(doc, val, theme, save) {
   
   if (theme == "light-theme") {
-    cr_foreground_color_light = default_foreground_color_light;
+    reader_ext_foreground_color_light = default_foreground_color_light;
 
-    console.log("set foreground color to ", default_foreground_color_light)
+    //console.log("set foreground color to ", default_foreground_color_light)
 
     if(save){
-      saveStorageValue('cr_foreground_color_light', default_foreground_color_light);
+      saveStorageValue('reader_ext_foreground_color_light', default_foreground_color_light);
     }
   } 
   else if (theme == "dark-theme"){
-    cr_foreground_color_dark = default_foreground_color_dark;
-    console.log("set foreground color to ", val)
+    reader_ext_foreground_color_dark = default_foreground_color_dark;
+    //console.log("set foreground color to ", val)
 
     if(save){
-      saveStorageValue('cr_foreground_color_dark', default_foreground_color_dark);
+      saveStorageValue('reader_ext_foreground_color_dark', default_foreground_color_dark);
     }
   } 
   else if (theme == "custom-theme"){
-    cr_foreground_color = val;
+    reader_ext_foreground_color = val;
  
     if(previousForegroundColor == null){
       previousForegroundColor = val;
-      console.log("Foreground Color: No previous data! Setting to - ", previousForegroundColor)
+      //console.log("Foreground Color: No previous data! Setting to - ", previousForegroundColor)
       showThemeSave(doc)
     }
     else if(previousForegroundColor != val){
       foreground_color_changed = true;
-      console.log("Foreground Color: Change detected! Marked as changed! Previous:",previousForegroundColor," New:",val)
+      //console.log("Foreground Color: Change detected! Marked as changed! Previous:",previousForegroundColor," New:",val)
       showThemeSave(doc)
     }
     else if(previousForegroundColor == val){
       foreground_color_changed = false;
-      console.log("Foreground Color: No change detected! Marked as unchanged! Previous:",previousForegroundColor," New:",val)
+      //console.log("Foreground Color: No change detected! Marked as unchanged! Previous:",previousForegroundColor," New:",val)
       showThemeSave(doc)
     }
 
     rateLimitLog("set Foreground color to ", val)
     if(save){
-    saveStorageValue('cr_foreground_color', val);
-    console.log("stored custom foreground", val)
+    saveStorageValue('reader_ext_foreground_color', val);
+    //console.log("stored custom foreground", val)
     }
   }
 
@@ -1054,14 +1050,14 @@ function setForegroundColor(doc, val, theme, save) {
   //     "background-color": val, 
   //     "box-shadow": "0 8px 16px rgba(0, 0, 0, 0.1)",
   // });
-  //   console.log("foreground is on")
+  //   //console.log("foreground is on")
   // }
   // else{
   //   $(doc).find("#reader-foreground").css({
   //     "background-color":"transparent",
   //     "box-shadow": "0 0px 0px rgba(0, 0, 0, 0)"
   //   });
-  //   console.log("foreground is off")
+  //   //console.log("foreground is off")
   // }
   $(doc).find("#options-foreground-color input[name='foreground_color']").val( val );
   $(doc).find("#options-foreground-color input[type='color']").val(  val );
@@ -1072,49 +1068,49 @@ function setForegroundColor(doc, val, theme, save) {
 function setTextColor(doc, val, theme, save) {
   
   if (theme == "light-theme") {
-    cr_text_color_light = val;
+    reader_ext_text_color_light = val;
 
     if(save){
-    saveStorageValue('cr_text_color_light', val)
+    saveStorageValue('reader_ext_text_color_light', val)
     }
   } else if (theme == "dark-theme"){
-    cr_text_color_dark = val;
+    reader_ext_text_color_dark = val;
 
     if(save){
-    saveStorageValue('cr_text_color_dark', val)
+    saveStorageValue('reader_ext_text_color_dark', val)
     }
   } else if (theme == "custom-theme"){
 
     if(previousTextColor == null){
       previousTextColor = val;
-      console.log("Text Color: No previous data! Setting to - ", previousTextColor)
+      //console.log("Text Color: No previous data! Setting to - ", previousTextColor)
       showThemeSave(doc)
   
     }
     else if(previousTextColor != val){
       text_color_changed = true;
-      console.log("Text Color: Change detected! Marked as changed! Previous:",previousTextColor," New:",val)
+      //console.log("Text Color: Change detected! Marked as changed! Previous:",previousTextColor," New:",val)
       showThemeSave(doc)
     }
     else if(previousTextColor == val){
       text_color_changed = false;
-      console.log("Text Color: No change detected! Marked as unchanged! Previous:",previousTextColor," New:",val)
+      //console.log("Text Color: No change detected! Marked as unchanged! Previous:",previousTextColor," New:",val)
       showThemeSave(doc)
     }
 
-    cr_text_color = val;
+    reader_ext_text_color = val;
     if(save){
-    saveStorageValue('cr_text_color', val)
+    saveStorageValue('reader_ext_text_color', val)
     }
   } else {
   }
 
-  $(doc).find("#cr-body").css("color", val);
-  $(doc).find("#cr-outline a").css("color", val);
-  $(doc).find("#cr-content table td").css("color", val);
-  $(doc).find("#cr-content table tr").css("color", val);
-  $(doc).find("#cr-content table th").css("color", val);
-  $(doc).find("#cr-content table").css("border-color", val);
+  $(doc).find("#reader-ext-body").css("color", val);
+  $(doc).find("#reader-ext-outline a").css("color", val);
+  $(doc).find("#reader-ext-content table td").css("color", val);
+  $(doc).find("#reader-ext-content table tr").css("color", val);
+  $(doc).find("#reader-ext-content table th").css("color", val);
+  $(doc).find("#reader-ext-content table").css("border-color", val);
 
 
   $(doc).find("#options-text-color input[name='text_color']").val(  val );
@@ -1127,45 +1123,45 @@ function setTextColor(doc, val, theme, save) {
 function setLinkColor(doc, val, theme, save) {
   
   if (theme == "light-theme") {
-    cr_link_color_light = val;
+    reader_ext_link_color_light = val;
 
     if(save){
-    saveStorageValue('cr_link_color_light', val)
+    saveStorageValue('reader_ext_link_color_light', val)
     }
   } else if (theme == "dark-theme"){
-    cr_link_color_dark = val;
+    reader_ext_link_color_dark = val;
 
     if(save){
-    saveStorageValue('cr_link_color_dark', val)
+    saveStorageValue('reader_ext_link_color_dark', val)
     }
   } else if (theme == "custom-theme"){
 
-    cr_link_color = val;
+    reader_ext_link_color = val;
 
     if(previousLinkColor == null){
       previousLinkColor = val;
-      console.log("Link Color: No previous data! Setting to - ", previousLinkColor)
+      //console.log("Link Color: No previous data! Setting to - ", previousLinkColor)
       showThemeSave(doc)
   
     }
     else if(previousLinkColor != val){
       link_color_changed = true;
-      console.log("Link Color: Change detected! Marked as changed! Previous:",previousLinkColor," New:",val)
+      //console.log("Link Color: Change detected! Marked as changed! Previous:",previousLinkColor," New:",val)
       showThemeSave(doc)
     }
     else if(previousLinkColor == val){
       link_color_changed = false;
-      console.log("Link Color: No change detected! Marked as unchanged! Previous:",previousLinkColor," New:",val)
+      //console.log("Link Color: No change detected! Marked as unchanged! Previous:",previousLinkColor," New:",val)
       showThemeSave(doc)
     }
 
 
     if(save){
-    saveStorageValue('cr_link_color', val)
+    saveStorageValue('reader_ext_link_color', val)
     }
   } else {
   }
-  $(doc).find("#cr-body").find("a:not(#cr-outline a)").css( "color", val );
+  $(doc).find("#reader-ext-body").find("a:not(#reader-ext-outline a)").css( "color", val );
 
   $(doc).find("#options-link-color input[name='link_color']").val(  val );
   $(doc).find("#options-link-color input[type='color']").val(  val );
@@ -1174,9 +1170,9 @@ function setLinkColor(doc, val, theme, save) {
 
 
 function setTheme(doc, val, save){
-  console.log('---setTheme called---')
-  cr_theme = val;
-  console.log("SET cr_theme TO VALUE OF - ", cr_theme)
+  //console.log('---setTheme called---')
+  reader_ext_theme = val;
+  //console.log("SET reader_ext_theme TO VALUE OF - ", reader_ext_theme)
   $(doc).find("#options-theme ul li a").each(function(){
     if ($(this).attr("data-theme") == val) {
       $(this).addClass("active");
@@ -1184,87 +1180,87 @@ function setTheme(doc, val, save){
       $(this).removeClass("active");
     }
   });
-  $(doc).find("#cr-body").attr("class", val);
+  $(doc).find("#reader-ext-body").attr("class", val);
 
   if (val == "light-theme") {
     showPalette(false, doc);
-    setBackgroundColor(doc, cr_background_color_light.toUpperCase(), "light-theme");
-    setForegroundColor(doc, cr_foreground_color_light.toUpperCase(), "light-theme");
-    setTextColor(doc, cr_text_color_light.toUpperCase(), "light-theme");
-    setLinkColor(doc, cr_link_color_light.toUpperCase(), "light-theme");
-    console.log("CHANGED TO LIGHT THEME")
+    setBackgroundColor(doc, reader_ext_background_color_light.toUpperCase(), "light-theme");
+    setForegroundColor(doc, reader_ext_foreground_color_light.toUpperCase(), "light-theme");
+    setTextColor(doc, reader_ext_text_color_light.toUpperCase(), "light-theme");
+    setLinkColor(doc, reader_ext_link_color_light.toUpperCase(), "light-theme");
+    //console.log("CHANGED TO LIGHT THEME")
 
-    $(doc).find('::-webkit-scrollbar-track').css('background', cr_background_color_light.toUpperCase());
+    $(doc).find('::-webkit-scrollbar-track').css('background', reader_ext_background_color_light.toUpperCase());
 
   } else if (val == "dark-theme") {
     showPalette(false, doc);
-    setBackgroundColor(doc, cr_background_color_dark.toUpperCase(), "dark-theme");
-    setForegroundColor(doc, cr_foreground_color_dark.toUpperCase(), "dark-theme");
-    setTextColor(doc, cr_text_color_dark.toUpperCase(), "dark-theme");
-    setLinkColor(doc, cr_link_color_dark.toUpperCase(), "dark-theme");
-    $(doc).find('::-webkit-scrollbar-track').css('background', cr_background_color_dark.toUpperCase());
-    console.log("CHANGED TO DARK THEME")
+    setBackgroundColor(doc, reader_ext_background_color_dark.toUpperCase(), "dark-theme");
+    setForegroundColor(doc, reader_ext_foreground_color_dark.toUpperCase(), "dark-theme");
+    setTextColor(doc, reader_ext_text_color_dark.toUpperCase(), "dark-theme");
+    setLinkColor(doc, reader_ext_link_color_dark.toUpperCase(), "dark-theme");
+    $(doc).find('::-webkit-scrollbar-track').css('background', reader_ext_background_color_dark.toUpperCase());
+    //console.log("CHANGED TO DARK THEME")
   } else if (val == "custom-theme") {
     showPalette(true, doc);
-    setBackgroundColor(doc, cr_background_color.toUpperCase(), "custom-theme");
-    setForegroundColor(doc, cr_foreground_color.toUpperCase(), "custom-theme");
-    setTextColor(doc, cr_text_color.toUpperCase(), "custom-theme");
-    setLinkColor(doc, cr_link_color.toUpperCase(), "custom-theme");
-    $(doc).find('::-webkit-scrollbar-track').css('background', cr_background_color.toUpperCase());
-    console.log("CHANGED TO CUSTOM THEME")
+    setBackgroundColor(doc, reader_ext_background_color.toUpperCase(), "custom-theme");
+    setForegroundColor(doc, reader_ext_foreground_color.toUpperCase(), "custom-theme");
+    setTextColor(doc, reader_ext_text_color.toUpperCase(), "custom-theme");
+    setLinkColor(doc, reader_ext_link_color.toUpperCase(), "custom-theme");
+    $(doc).find('::-webkit-scrollbar-track').css('background', reader_ext_background_color.toUpperCase());
+    //console.log("CHANGED TO CUSTOM THEME")
   }``
 
   if(tempThemeSync=='off'){
-    saveStorageValue('last_manual_theme', cr_theme)
-    console.log("Manually changed, saving entry! - ",cr_theme)
+    saveStorageValue('last_manual_theme', reader_ext_theme)
+    //console.log("Manually changed, saving entry! - ",reader_ext_theme)
   }
   else{
-    console.log("theme sync is not off. Value is - ",tempThemeSync)
+    //console.log("theme sync is not off. Value is - ",tempThemeSync)
   }
 
-  // chrome.storage.sync.get('cr_theme_sync', function(result){
-  //   if(result['cr_theme_sync'] == 'off'){
-  //     saveStorageValue('last_manual_theme', cr_theme)
-  //     console.log("Manually changed, saving entry! - ",cr_theme)
+  // chrome.storage.sync.get('reader_ext_theme_sync', function(result){
+  //   if(result['reader_ext_theme_sync'] == 'off'){
+  //     saveStorageValue('last_manual_theme', reader_ext_theme)
+  //     //console.log("Manually changed, saving entry! - ",reader_ext_theme)
   //   }
   //   else{
-  //     console.log("theme sync is not off. Value is - ",result['cr_theme_sync'])
+  //     //console.log("theme sync is not off. Value is - ",result['reader_ext_theme_sync'])
   //   }
   // })
 
-  console.log("REQUESTING SAVE FOR cr_theme - ", cr_theme)
-  saveStorageValue('cr_theme', cr_theme)
-  console.log("Saved new theme config")
+  //console.log("REQUESTING SAVE FOR reader_ext_theme - ", reader_ext_theme)
+  saveStorageValue('reader_ext_theme', reader_ext_theme)
+  //console.log("Saved new theme config")
 }
 
 function setDisplayOutline(doc, status, save) {
   if(previousOutline == null){
     previousOutline = status;
-    console.log("Display: No previous data! Setting to - ", previousOutline)
+    //console.log("Display: No previous data! Setting to - ", previousOutline)
     showOptionsSave(doc, 0)
 
   }
   else if(previousOutline != status){
     outline_changed = true;
-    console.log("Display: Change detected! Marked as changed! Previous:",previousOutline," New:",status)
+    //console.log("Display: Change detected! Marked as changed! Previous:",previousOutline," New:",status)
     showOptionsSave(doc, 0)
   }
   else if(previousOutline == status){
     outline_changed = false;
-    console.log("Display: No change detected! Marked as unchanged! Previous:",previousOutline," New:",status)
+    //console.log("Display: No change detected! Marked as unchanged! Previous:",previousOutline," New:",status)
     showOptionsSave(doc, 0)
   }
   if (status == "on") {
-    $(doc).find('#cr-outline').show();
+    $(doc).find('#reader-ext-outline').show();
     $(doc).find('#options-display-outline input').prop("checked", true);
   } else {
-    $(doc).find('#cr-outline').hide();
+    $(doc).find('#reader-ext-outline').hide();
     $(doc).find('#options-display-outline input').prop("checked", false);
   }
  
-    cr_display_outline = status;
+    reader_ext_display_outline = status;
     if(save){
-    saveStorageValue('cr_display_outline', status);
+    saveStorageValue('reader_ext_display_outline', status);
     previousOutline = status;
     }
   
@@ -1272,31 +1268,31 @@ function setDisplayOutline(doc, status, save) {
 function setDisplayImages(doc, status, save) {
   if(previousImages == null){
     previousImages = status;
-    console.log("Images: No previous data! Setting to - ", previousImages)
+    //console.log("Images: No previous data! Setting to - ", previousImages)
     showOptionsSave(doc, 0)
 
   }
   else if(previousImages != status){
     images_changed = true;
-    console.log("Images: Change detected! Marked as changed! Previous:",previousImages," New:",status)
+    //console.log("Images: Change detected! Marked as changed! Previous:",previousImages," New:",status)
     showOptionsSave(doc, 0)
   }
   else if(previousImages == status){
     images_changed = false;
-    console.log("Images: No change detected! Marked as unchanged! Previous:",previousImages," New:",status)
+    //console.log("Images: No change detected! Marked as unchanged! Previous:",previousImages," New:",status)
     showOptionsSave(doc, 0)
   }
   if (status == "on") {
-    $(doc).find('#cr-content-container img').show();
+    $(doc).find('#reader-ext-content-container img').show();
     $(doc).find('#options-display-images input').prop("checked", true);
   } else {
-    $(doc).find('#cr-content-container img').hide();
+    $(doc).find('#reader-ext-content-container img').hide();
     $(doc).find('#options-display-images input').prop("checked", false);
   }
   if (save) {
-    cr_display_images = status;
+    reader_ext_display_images = status;
     
-    saveStorageValue('cr_display_images', status);
+    saveStorageValue('reader_ext_display_images', status);
 
     previousImages = status;
     
@@ -1306,35 +1302,35 @@ function setDisplayImages(doc, status, save) {
 function setDisplayMeta(doc, status, save) {
   if(previousMeta == null){
     previousMeta = status;
-    console.log("Meta: No previous data! Setting to - ", previousMeta)
+    //console.log("Meta: No previous data! Setting to - ", previousMeta)
     showOptionsSave(doc, 0)
 
   }
   else if(previousMeta != status){
     meta_changed = true;
-    console.log("Meta: Change detected! Marked as changed! Previous:",previousMeta," New:",status)
+    //console.log("Meta: Change detected! Marked as changed! Previous:",previousMeta," New:",status)
     showOptionsSave(doc, 0)
   }
   else if(previousMeta == status){
     meta_changed = false;
-    console.log("Meta: No change detected! Marked as unchanged! Previous:",previousMeta," New:",status)
+    //console.log("Meta: No change detected! Marked as unchanged! Previous:",previousMeta," New:",status)
     showOptionsSave(doc, 0)
   }
   if (status == "on") {
-    $(doc).find('#cr-container #cr-meta').show();
+    $(doc).find('#reader-ext-container #reader-ext-meta').show();
     $(doc).find('#options-display-meta input').prop("checked", true);
     $(doc).find('#options-display-author').show();
     $(doc).find('#options-display-reading-time').show();
   } else {
-    $(doc).find('#cr-container #cr-meta').hide();
+    $(doc).find('#reader-ext-container #reader-ext-meta').hide();
     $(doc).find('#options-display-meta input').prop("checked", false);
     $(doc).find('#options-display-author').hide();
     $(doc).find('#options-display-reading-time').hide();
   }
   if (save) {
-    cr_display_meta = status;
+    reader_ext_display_meta = status;
     
-    saveStorageValue('cr_display_meta', status);
+    saveStorageValue('reader_ext_display_meta', status);
 
     previousMeta = status;
     
@@ -1346,31 +1342,31 @@ function setDisplayMeta(doc, status, save) {
 function setDisplayAuthor(doc, status, save) {
   if(previousAuthor == null){
     previousAuthor = status;
-    console.log("Author: No previous data! Setting to - ", previousAuthor)
+    //console.log("Author: No previous data! Setting to - ", previousAuthor)
     showOptionsSave(doc, 0)
 
   }
   else if(previousAuthor != status){
     author_changed = true;
-    console.log("Author: Change detected! Marked as changed! Previous:",previousAuthor," New:",status)
+    //console.log("Author: Change detected! Marked as changed! Previous:",previousAuthor," New:",status)
     showOptionsSave(doc, 0)
   }
   else if(previousAuthor == status){
     author_changed = false;
-    console.log("Author: No change detected! Marked as unchanged! Previous:",previousAuthor," New:",status)
+    //console.log("Author: No change detected! Marked as unchanged! Previous:",previousAuthor," New:",status)
     showOptionsSave(doc, 0)
   }
   if (status == "on") {
-    $(doc).find('#cr-container #cr-meta-author').show();
+    $(doc).find('#reader-ext-container #reader-ext-meta-author').show();
     $(doc).find('#options-display-author input').prop("checked", true);
   } else {
-    $(doc).find('#cr-container #cr-meta-author').hide();
+    $(doc).find('#reader-ext-container #reader-ext-meta-author').hide();
     $(doc).find('#options-display-author input').prop("checked", false);
   }
   if (save) {
-    cr_display_author = status;
+    reader_ext_display_author = status;
     
-    saveStorageValue('cr_display_author', status);
+    saveStorageValue('reader_ext_display_author', status);
     previousAuthor = status;
     
   }
@@ -1378,32 +1374,32 @@ function setDisplayAuthor(doc, status, save) {
 function setDisplayReadingTime(doc, status, save) {
   if(previousReadTime == null){
     previousReadTime = status;
-    console.log("ReadTime: No previous data! Setting to - ", previousReadTime)
+    //console.log("ReadTime: No previous data! Setting to - ", previousReadTime)
     showOptionsSave(doc, 0)
 
   }
   else if(previousReadTime != status){
     read_time_changed = true;
-    console.log("ReadTime: Change detected! Marked as changed! Previous:",previousReadTime," New:",status)
+    //console.log("ReadTime: Change detected! Marked as changed! Previous:",previousReadTime," New:",status)
     showOptionsSave(doc, 0)
   }
   else if(previousReadTime == status){
     read_time_changed = false;
-    console.log("ReadTime: No change detected! Marked as unchanged! Previous:",previousReadTime," New:",status)
+    //console.log("ReadTime: No change detected! Marked as unchanged! Previous:",previousReadTime," New:",status)
     showOptionsSave(doc, 0)
   }
   if (status == "on") {
-    $(doc).find('#cr-container #cr-meta-reading-time').show();
+    $(doc).find('#reader-ext-container #reader-ext-meta-reading-time').show();
     $(doc).find('#options-display-reading-time input').prop("checked", true);
   } else {
-    $(doc).find('#cr-container #cr-meta-reading-time').hide();
+    $(doc).find('#reader-ext-container #reader-ext-meta-reading-time').hide();
     $(doc).find('#options-display-reading-time input').prop("checked", false);
   }
 
   if (save) {
-    cr_display_reading_time = status;
+    reader_ext_display_reading_time = status;
     
-    saveStorageValue('cr_display_reading_time', status);
+    saveStorageValue('reader_ext_display_reading_time', status);
     previousReadTime = status;
     
   }
@@ -1413,36 +1409,36 @@ function setDarkPanel(doc, status, save){
   tempDarkPanel = status
   if(previousDarkPanel == null){
     previousDarkPanel = status;
-    console.log("Dark Panel: No previous data! Setting to - ", previousDarkPanel)
+    //console.log("Dark Panel: No previous data! Setting to - ", previousDarkPanel)
     showOptionsSave(doc, 0)
 
   }
   else if(previousDarkPanel != status){
     dark_panel_changed = true;
-    console.log("Dark Panel: Change detected! Marked as changed! Previous:",previousDarkPanel," New:",status)
+    //console.log("Dark Panel: Change detected! Marked as changed! Previous:",previousDarkPanel," New:",status)
     showOptionsSave(doc, 0)
   }
   
   else if(previousDarkPanel == status){
     dark_panel_changed = false;
-    console.log("Dark Panel: No change detected! Marked as unchanged! Previous:",previousDarkPanel," New:",status)
+    //console.log("Dark Panel: No change detected! Marked as unchanged! Previous:",previousDarkPanel," New:",status)
     showOptionsSave(doc, 0)
   }
 
   if (status == "on") {
-    $(doc).find("#cr-container .options-panel").addClass("options-panel-dark");
+    $(doc).find("#reader-ext-container .options-panel").addClass("options-panel-dark");
     $(doc).find("#options-dark-panel input").prop("checked", true);
-    cr_dark_panel = status;
+    reader_ext_dark_panel = status;
 
   } else {
-    $(doc).find("#cr-container .options-panel").attr("class", "options-panel");
+    $(doc).find("#reader-ext-container .options-panel").attr("class", "options-panel");
     $(doc).find("#options-dark-panel input").prop("checked", false);
-    cr_dark_panel = status;
+    reader_ext_dark_panel = status;
   }
 
   if (save) {
 
-    saveStorageValue('cr_dark_panel', status);
+    saveStorageValue('reader_ext_dark_panel', status);
 
     previousDarkPanel = status;    
     
@@ -1452,80 +1448,80 @@ function setDarkPanel(doc, status, save){
 function setThemeSync(doc, status, save){
   if(previousThemeSync==null){
     previousThemeSync = status;
-    console.log("Theme Sync: No previous data! Setting to - ", previousThemeSync)
+    //console.log("Theme Sync: No previous data! Setting to - ", previousThemeSync)
     showThemeSave(doc, 0)
   }
   else if(previousThemeSync != status){
     theme_sync_changed = true;
-    console.log("Theme Sync: Change detected! Marked as changed! Previous:",previousThemeSync," New:",status)
+    //console.log("Theme Sync: Change detected! Marked as changed! Previous:",previousThemeSync," New:",status)
     showOptionsSave(doc,0)
   }
   else if(previousThemeSync == status){
     theme_sync_changed = false;
-    console.log("Theme Sync: No change detected! Marked as unchanged! Previous:",previousThemeSync," New:",status)
+    //console.log("Theme Sync: No change detected! Marked as unchanged! Previous:",previousThemeSync," New:",status)
     showOptionsSave(doc,0)
   }
   if (status == "on") {
-    cr_theme_sync = status;
-    saveStorageValue('cr_theme_sync',cr_theme_sync)
+    reader_ext_theme_sync = status;
+    saveStorageValue('reader_ext_theme_sync',reader_ext_theme_sync)
     tempThemeSync = "on";
     chrome.storage.sync.get('last_manual_theme', function(result){
-      console.log("Uploading last manual theme: - ",result['last_manual_theme'])
+      //console.log("Uploading last manual theme: - ",result['last_manual_theme'])
       tempLastTheme = result['last_manual_theme']
     })
     if(window.matchMedia('(prefers-color-scheme: light)').matches){
-      cr_theme = "light-theme"
+      reader_ext_theme = "light-theme"
     }
     else{
-      cr_theme = "dark-theme"
+      reader_ext_theme = "dark-theme"
     }
 
     $(doc).find('#options-theme').hide();
     $(doc).find('#options-theme-sync input').prop("checked", true);
-    console.log("Set to default device theme: light=",window.matchMedia('(prefers-color-scheme: light)').matches)
-    console.log("Turned on sync -",cr_theme_sync)
+    //console.log("Set to default device theme: light=",window.matchMedia('(prefers-color-scheme: light)').matches)
+    //console.log("Turned on sync -",reader_ext_theme_sync)
   }
   else if(status=="off"){
 
-    // chrome.storage.sync.get('cr_theme_sync',function(result){
-    //   console.log("Current cr_theme_sync - ",result['cr_theme_sync'])
-    //   if(result['cr_theme_sync']=='on'){
+    // chrome.storage.sync.get('reader_ext_theme_sync',function(result){
+    //   //console.log("Current reader_ext_theme_sync - ",result['reader_ext_theme_sync'])
+    //   if(result['reader_ext_theme_sync']=='on'){
     //     chrome.storage.sync.get('last_manual_theme', function(result){
     //       if(result['last_manual_theme']){
-    //         cr_theme = result['last_manual_theme']
-    //         console.log("Retrieved last manual theme! - ",cr_theme)
+    //         reader_ext_theme = result['last_manual_theme']
+    //         //console.log("Retrieved last manual theme! - ",reader_ext_theme)
     //       }
     //       else{
-    //         console.log("No previously recorded manual theme changes, setting to custom.")
-    //         cr_theme = 'custom-theme'
+    //         //console.log("No previously recorded manual theme changes, setting to custom.")
+    //         reader_ext_theme = 'custom-theme'
     //       }
-    //       console.log("Sync is off - restored last manual theme: - ",cr_theme)
+    //       //console.log("Sync is off - restored last manual theme: - ",reader_ext_theme)
     //     })
     //   }
     // })
-    console.log("status switched to off")
+    //console.log("status switched to off")
     if(tempThemeSync=='on'){
-      console.log("Theme sync going from on to off. Change to last manual theme.")
+      //console.log("Theme sync going from on to off. Change to last manual theme.")
       if(tempLastTheme){
-        console.log("Sync is going from on to off - restored last manual theme: - ",tempLastTheme)
-        cr_theme = tempLastTheme
-        console.log("Retrieved last manual theme! - ",cr_theme)
+        //console.log("Sync is going from on to off - restored last manual theme: - ",tempLastTheme)
+        reader_ext_theme = tempLastTheme
+        //console.log("Retrieved last manual theme! - ",reader_ext_theme)
       }
       else{
-        console.log("Not previously recorded manual theme changes, setting to custom.")
-        cr_theme = 'custom-theme'
+        //console.log("Not previously recorded manual theme changes, setting to custom.")
+        reader_ext_theme = 'custom-theme'
       }
     }
-    cr_theme_sync = status;
-    saveStorageValue('cr_theme_sync',cr_theme_sync)
+    reader_ext_theme_sync = status;
+    saveStorageValue('reader_ext_theme_sync',reader_ext_theme_sync)
 
     $(doc).find('#options-theme').show();
     $(doc).find('#options-theme-sync input').prop("checked", false);
-    console.log("Set to manual theme.")
+    //console.log("Set to manual theme.")
   }
   tempThemeSync=status
   previousThemeSync = status;
-  setTheme(doc,cr_theme,true)
+  setTheme(doc,reader_ext_theme,true)
 
 }
 
@@ -1533,31 +1529,31 @@ function setDisplayFooter(doc, status, save) {
 
   if(previousFooter == null){
     previousFooter = status;
-    console.log("Footer: No previous data! Setting to - ", previousFooter)
+    //console.log("Footer: No previous data! Setting to - ", previousFooter)
     showOptionsSave(doc, 0)
   }
   else if(previousFooter != status){
     footer_changed = true;
-    console.log("Footer: Change detected! Marked as changed! Previous:",previousFooter," New:",status)
+    //console.log("Footer: Change detected! Marked as changed! Previous:",previousFooter," New:",status)
     showOptionsSave(doc, 0)
   }
   else if(previousFooter == status){
     footer_changed = false;
-    console.log("Footer: No change detected! Marked as unchanged! Previous:",previousFooter," New:",status)
+    //console.log("Footer: No change detected! Marked as unchanged! Previous:",previousFooter," New:",status)
     showOptionsSave(doc, 0)
   }
 
   if (status == "on") {
-    $(doc).find('#cr-container #cr-footer').show();
+    $(doc).find('#reader-ext-container #reader-ext-footer').show();
     $(doc).find('#options-display-footer input').prop("checked", true);
   } else {
-    $(doc).find('#cr-container #cr-footer').hide();
+    $(doc).find('#reader-ext-container #reader-ext-footer').hide();
     $(doc).find('#options-display-footer input').prop("checked", false);
   }
   if (save) {
-    cr_display_meta = status;
+    reader_ext_display_meta = status;
    
-    saveStorageValue('cr_display_meta', status);
+    saveStorageValue('reader_ext_display_meta', status);
 
     previousFooter = status;
     
@@ -1566,14 +1562,14 @@ function setDisplayFooter(doc, status, save) {
 
 function setDefaultCss(doc, val, save){
   if (save) {
-    cr_default_css = val;
-    saveStorageValue('cr_default_css', val);
+    reader_ext_default_css = val;
+    saveStorageValue('reader_ext_default_css', val);
   }
   $(doc).find("#options-default-css textarea").html(val);
-  if ($(doc).find("#cr_default_css").length == false) {
-    $("<style id='cr_default_css'>").text(val).appendTo(doc.head);
+  if ($(doc).find("#reader_ext_default_css").length == false) {
+    $("<style id='reader_ext_default_css'>").text(val).appendTo(doc.head);
   }
-  $(doc).find("#cr_default_css").html(val);
+  $(doc).find("#reader_ext_default_css").html(val);
 }
 
 
@@ -1582,21 +1578,21 @@ function setDefaultCss(doc, val, save){
 /*** Options Listeners & Save ***/
 function optionsDefaultSettings(doc) {
   // Options Style
-  chrome.storage.sync.get(['cr_font_family'],function(result){setFontFamily(doc, (result.cr_font_family) ? result.cr_font_family : 'Arial', true) });
-  chrome.storage.sync.get(['cr_font_size'],function(result){setFontSize(doc, (result.cr_font_size) ? result.cr_font_size : 16, true) });
-  chrome.storage.sync.get(['cr_line_height'],function(result){setLineHeight(doc, (result.cr_line_height) ? result.cr_line_height : 1.84, true) });
-  chrome.storage.sync.get(['cr_letter_space'],function(result){setLetterSpace(doc, (result.cr_letter_space) ? result.cr_letter_space : 0, true) });
-  chrome.storage.sync.get(['cr_max_width'],function(result){setMaxWidth(doc, (result.cr_max_width) ? result.cr_max_width : 680, true) });
+  chrome.storage.sync.get(['reader_ext_font_family'],function(result){setFontFamily(doc, (result.reader_ext_font_family) ? result.reader_ext_font_family : 'Arial', true) });
+  chrome.storage.sync.get(['reader_ext_font_size'],function(result){setFontSize(doc, (result.reader_ext_font_size) ? result.reader_ext_font_size : 16, true) });
+  chrome.storage.sync.get(['reader_ext_line_height'],function(result){setLineHeight(doc, (result.reader_ext_line_height) ? result.reader_ext_line_height : 1.84, true) });
+  chrome.storage.sync.get(['reader_ext_letter_space'],function(result){setLetterSpace(doc, (result.reader_ext_letter_space) ? result.reader_ext_letter_space : 0, true) });
+  chrome.storage.sync.get(['reader_ext_max_width'],function(result){setMaxWidth(doc, (result.reader_ext_max_width) ? result.reader_ext_max_width : 680, true) });
 
   // Themes
   // Theme & DefaultCSS
-  chrome.storage.sync.get(['cr_default_css'], function(result) {
-    if (result.cr_default_css) {
-      setDefaultCss(doc, result.cr_default_css, true);
+  chrome.storage.sync.get(['reader_ext_default_css'], function(result) {
+    if (result.reader_ext_default_css) {
+      setDefaultCss(doc, result.reader_ext_default_css, true);
     } else {
       fetch(chrome.runtime.getURL('styles/default.css')).then(response => response.text()).then(data => {
         setDefaultCss(doc, data, true);
-        cr_default_css = data;
+        reader_ext_default_css = data;
       });
     }
   });
@@ -1604,39 +1600,39 @@ function optionsDefaultSettings(doc) {
   /////////////////////// NEVER USING GLOBAL VARIABLES CUZ WHY DID I SPEND 6 HOURS ON THIS STUPID THING THAT BROKE BECAUSE THE ORDER OF THE COMMANDS
 
   // Light Theme
-  chrome.storage.sync.get(['cr_background_color_light'],function(result){ setBackgroundColor(doc, (default_background_color_light), "light-theme", true) });
-  chrome.storage.sync.get(['cr_foreground_color_light'],function(result){ setForegroundColor(doc, (default_foreground_color_light), "light-theme", true) });
-  chrome.storage.sync.get(['cr_text_color_light'],function(result){ setTextColor(doc, (default_text_color_light), "light-theme", true) });
-  chrome.storage.sync.get(['cr_link_color_light'],function(result){ setLinkColor(doc, (default_link_color_light), "light-theme", true) });
+  chrome.storage.sync.get(['reader_ext_background_color_light'],function(result){ setBackgroundColor(doc, (default_background_color_light), "light-theme", true) });
+  chrome.storage.sync.get(['reader_ext_foreground_color_light'],function(result){ setForegroundColor(doc, (default_foreground_color_light), "light-theme", true) });
+  chrome.storage.sync.get(['reader_ext_text_color_light'],function(result){ setTextColor(doc, (default_text_color_light), "light-theme", true) });
+  chrome.storage.sync.get(['reader_ext_link_color_light'],function(result){ setLinkColor(doc, (default_link_color_light), "light-theme", true) });
    // Dark Theme
-  chrome.storage.sync.get(['cr_background_color_dark'],function(result){ setBackgroundColor(doc, (default_background_color_dark), "dark-theme", true) });
-  chrome.storage.sync.get(['cr_foreground_color_dark'],function(result){ setForegroundColor(doc, (default_foreground_color_dark), "dark-theme", true) });
-  chrome.storage.sync.get(['cr_text_color_dark'],function(result){ setTextColor(doc, (default_text_color_dark), "dark-theme", true) });
-  chrome.storage.sync.get(['cr_link_color_dark'],function(result){ setLinkColor(doc, (default_linkcolor_dark), "dark-theme", true) });
+  chrome.storage.sync.get(['reader_ext_background_color_dark'],function(result){ setBackgroundColor(doc, (default_background_color_dark), "dark-theme", true) });
+  chrome.storage.sync.get(['reader_ext_foreground_color_dark'],function(result){ setForegroundColor(doc, (default_foreground_color_dark), "dark-theme", true) });
+  chrome.storage.sync.get(['reader_ext_text_color_dark'],function(result){ setTextColor(doc, (default_text_color_dark), "dark-theme", true) });
+  chrome.storage.sync.get(['reader_ext_link_color_dark'],function(result){ setLinkColor(doc, (default_linkcolor_dark), "dark-theme", true) });
    // Custom Theme
-  chrome.storage.sync.get(['cr_background_color'],function(result){ setBackgroundColor(doc, (result.cr_background_color ? result.cr_background_color.toUpperCase() : "#F8F1E3"), "custom-theme", true) });
-  chrome.storage.sync.get(['cr_foreground_color'],function(result){ setForegroundColor(doc, (result.cr_foreground_color ? result.cr_foreground_color.toUpperCase() : "#FFFFFF"), "custom-theme", true) });
-  chrome.storage.sync.get(['cr_text_color'],function(result){ setTextColor(doc, (result.cr_text_color ? result.cr_text_color : "#333333"), "custom-theme", true) });
-  chrome.storage.sync.get(['cr_link_color'],function(result){ setLinkColor(doc, (result.cr_link_color ? result.cr_link_color : "#5F6368"), "custom-theme", true) });
+  chrome.storage.sync.get(['reader_ext_background_color'],function(result){ setBackgroundColor(doc, (result.reader_ext_background_color ? result.reader_ext_background_color.toUpperCase() : "#F8F1E3"), "custom-theme", true) });
+  chrome.storage.sync.get(['reader_ext_foreground_color'],function(result){ setForegroundColor(doc, (result.reader_ext_foreground_color ? result.reader_ext_foreground_color.toUpperCase() : "#FFFFFF"), "custom-theme", true) });
+  chrome.storage.sync.get(['reader_ext_text_color'],function(result){ setTextColor(doc, (result.reader_ext_text_color ? result.reader_ext_text_color : "#333333"), "custom-theme", true) });
+  chrome.storage.sync.get(['reader_ext_link_color'],function(result){ setLinkColor(doc, (result.reader_ext_link_color ? result.reader_ext_link_color : "#5F6368"), "custom-theme", true) });
   // Theme (need to be down here bcoz setTheme requires themes' values)
-  console.log("Getting theme...")
-  chrome.storage.sync.get(['cr_theme'],function(result){ console.log("reading theme - ",result.cr_theme);setTheme(doc, (result.cr_theme ? result.cr_theme : "custom-theme"), false); console.log("Got theme - ",result.cr_theme) })
+  //console.log("Getting theme...")
+  chrome.storage.sync.get(['reader_ext_theme'],function(result){ setTheme(doc, (result.reader_ext_theme ? result.reader_ext_theme : "custom-theme"), false);})
 
   // Theme Sync
-  chrome.storage.sync.get(['cr_theme_sync'],function(result){ tempThemeSync=(result.cr_theme_sync ? result.cr_theme_sync : "on");setThemeSync(doc, (result.cr_theme_sync) ? result.cr_theme_sync : "on", true) });
+  chrome.storage.sync.get(['reader_ext_theme_sync'],function(result){ tempThemeSync=(result.reader_ext_theme_sync ? result.reader_ext_theme_sync : "on");setThemeSync(doc, (result.reader_ext_theme_sync) ? result.reader_ext_theme_sync : "on", true) });
   chrome.storage.sync.get(['last_manual_theme'],function(result){tempLastTheme=(result.last_manual_theme ? result.last_manual_theme : 'custom-theme')})
   
 
   
 
   // Reader Components
-  chrome.storage.sync.get(['cr_dark_panel'],function(result){setDarkPanel(doc, (result.cr_dark_panel) ? result.cr_dark_panel : "on", true) });
-  chrome.storage.sync.get(['cr_display_footer'],function(result){setDisplayFooter(doc, (result.cr_display_footer) ? result.cr_display_footer : "on", true) });
-  chrome.storage.sync.get(['cr_display_outline'],function(result){setDisplayOutline(doc, (result.cr_display_outline) ? result.cr_display_outline : "off", true) });
-  chrome.storage.sync.get(['cr_display_images'],function(result){setDisplayImages(doc, (result.cr_display_images) ? result.cr_display_images : "on", true) });
-  chrome.storage.sync.get(['cr_display_meta'],function(result){setDisplayMeta(doc, (result.cr_display_meta) ? result.cr_display_meta : "on", true) });
-  chrome.storage.sync.get(['cr_display_author'],function(result){setDisplayAuthor(doc, (result.cr_display_author) ? result.cr_display_author : "on", true) });
-  chrome.storage.sync.get(['cr_display_reading_time'],function(result){setDisplayReadingTime(doc, (result.cr_display_reading_time) ? result.cr_display_reading_time : "on", true) });
+  chrome.storage.sync.get(['reader_ext_dark_panel'],function(result){setDarkPanel(doc, (result.reader_ext_dark_panel) ? result.reader_ext_dark_panel : "on", true) });
+  chrome.storage.sync.get(['reader_ext_display_footer'],function(result){setDisplayFooter(doc, (result.reader_ext_display_footer) ? result.reader_ext_display_footer : "on", true) });
+  chrome.storage.sync.get(['reader_ext_display_outline'],function(result){setDisplayOutline(doc, (result.reader_ext_display_outline) ? result.reader_ext_display_outline : "off", true) });
+  chrome.storage.sync.get(['reader_ext_display_images'],function(result){setDisplayImages(doc, (result.reader_ext_display_images) ? result.reader_ext_display_images : "on", true) });
+  chrome.storage.sync.get(['reader_ext_display_meta'],function(result){setDisplayMeta(doc, (result.reader_ext_display_meta) ? result.reader_ext_display_meta : "on", true) });
+  chrome.storage.sync.get(['reader_ext_display_author'],function(result){setDisplayAuthor(doc, (result.reader_ext_display_author) ? result.reader_ext_display_author : "on", true) });
+  chrome.storage.sync.get(['reader_ext_display_reading_time'],function(result){setDisplayReadingTime(doc, (result.reader_ext_display_reading_time) ? result.reader_ext_display_reading_time : "on", true) });
   
 }
 function optionsMenu(iframe) {
@@ -1677,11 +1673,11 @@ function optionsMenu(iframe) {
   $(doc).find('#options-fullscreen').click(function () {
     fullscreen.toggle($('#container')[0]).then(function () {
       if (fullscreen.isFullscreen) {
-        $(doc).find('#options-fullscreen i.enter').hide();
-        $(doc).find('#options-fullscreen i.exit').show();
+        $(doc).find('#options-fullscreen i.bx-fullscreen').hide();
+        $(doc).find('#options-fullscreen i.bx-exit-fullscreen').show();
       } else {
-        $(doc).find('#options-fullscreen i.enter').show();
-        $(doc).find('#options-fullscreen i.exit').hide();
+        $(doc).find('#options-fullscreen i.bx-fullscreen').show();
+        $(doc).find('#options-fullscreen i.bx-exit-fullscreen').hide();
       }
     });
   });
@@ -1748,7 +1744,7 @@ function optionsStyle(doc) {
 function getActiveTheme(doc){
   // Get active theme
   active = $(doc).find("#options-theme ul li a.active").attr("data-theme");
-  console.log("Active theme requested - ", active)
+  //console.log("Active theme requested - ", active)
   return active;
 }
 
@@ -1756,9 +1752,9 @@ function getActiveTheme(doc){
 var showSaveTimeout;
 var saving = false;
 
-let themeSaveTimeout;
-let styleSaveTimeout;
-let optionsSaveTimeout;
+var themeSaveTimeout;
+var styleSaveTimeout;
+var optionsSaveTimeout;
 
 function showThemeSave(doc){
   
@@ -1769,7 +1765,7 @@ function showThemeSave(doc){
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
     $(doc).find(".options-panel-content button[name='save-options-reader-components']").show();
     removeSaveLabel(doc)
-    console.log("show theme save")
+    //console.log("show theme save")
     saving = false;
     clearTimeout(themeSaveTimeout);
     clearTimeout(optionsSaveTimeout);
@@ -1785,7 +1781,7 @@ function showThemeSave(doc){
     $(doc).find(".options-panel-content button[name='save-options-style']").hide();
     $(doc).find(".options-panel-content button[name='save-options-themes']").hide();
     $(doc).find(".options-panel-content button[name='save-options-reader-components']").hide();
-      //console.log("hide theme save - Timeout set")
+      ////console.log("hide theme save - Timeout set")
       saving = false;
     }, showSaveTimeout);
   }
@@ -1802,7 +1798,7 @@ function showStyleSave(doc){
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
     $(doc).find(".options-panel-content button[name='save-options-reader-components']").show();
     removeSaveLabel(doc)
-      console.log("show style save")
+      //console.log("show style save")
       saving = false;
       clearTimeout(themeSaveTimeout);
       clearTimeout(optionsSaveTimeout);
@@ -1819,7 +1815,7 @@ function showStyleSave(doc){
     $(doc).find(".options-panel-content button[name='save-options-style']").hide();
     $(doc).find(".options-panel-content button[name='save-options-themes']").hide();
     $(doc).find(".options-panel-content button[name='save-options-reader-components']").hide();
-      //console.log("hide style save - Timeout set")
+      ////console.log("hide style save - Timeout set")
 
       saving = false;
     }, showSaveTimeout);
@@ -1838,7 +1834,7 @@ function showOptionsSave(doc){
       $(doc).find(".options-panel-content button[name='save-options-reader-components']").show();
 
       removeSaveLabel(doc);
-        console.log("show options save")
+        //console.log("show options save")
         saving = false;
         clearTimeout(themeSaveTimeout);
         clearTimeout(optionsSaveTimeout);
@@ -1855,7 +1851,7 @@ function showOptionsSave(doc){
       $(doc).find(".options-panel-content button[name='save-options-style']").hide();
       $(doc).find(".options-panel-content button[name='save-options-themes']").hide();
       $(doc).find(".options-panel-content button[name='save-options-reader-components']").hide();
-        //console.log("hide options save - Timeout set")
+        ////console.log("hide options save - Timeout set")
         saving = false;
       }, showSaveTimeout);
     }
@@ -1864,17 +1860,17 @@ function showOptionsSave(doc){
 
 function updateSaveButtonTheme(doc) {
   const saveButtons = $(doc).find(".options-panel-content button[name^='save-options']");
-  console.log('Configuring save buttons...')
-  // Add new theme class based on cr_theme
+  //console.log('Configuring save buttons...')
+  // Add new theme class based on reader_ext_theme
   if (tempDarkPanel=='on') {
     saveButtons.removeClass("save-button-light-theme");
     saveButtons.find('span').removeClass("save-span-light-theme")
-    console.log("Removed light theme from save button")
+    //console.log("Removed light theme from save button")
   }
   else if(tempDarkPanel=='off'){
     saveButtons.addClass("save-button-light-theme");
     saveButtons.find('span').addClass("save-span-light-theme")
-    console.log("Changed button to light theme")
+    //console.log("Changed button to light theme")
   }
 }
 
@@ -1884,8 +1880,8 @@ function optionsTheme(doc) {
 
 
   // Listeners
-  $(doc).find("#options-theme ul li a").click(function() { cr_theme = $(this).attr("data-theme"); setTheme(doc, cr_theme,true); console.log("Theme changed")});
-  $(doc).find("#options-theme-sync input").change(function(){ setThemeSync(doc, getCheckboxStatus($(this))); console.log("Theme Sync clicked")})
+  $(doc).find("#options-theme ul li a").click(function() { reader_ext_theme = $(this).attr("data-theme"); setTheme(doc, reader_ext_theme,true);});
+  $(doc).find("#options-theme-sync input").change(function(){ setThemeSync(doc, getCheckboxStatus($(this)));})
   $(doc).find("#options-background-color input").on("input change", function() { setBackgroundColor(doc, $(this).val().toUpperCase(), getActiveTheme(doc)) });
   $(doc).find("#options-foreground-color input").on("input change", function() { setForegroundColor(doc, $(this).val().toUpperCase(), getActiveTheme(doc)) });
   $(doc).find("#options-text-color input").on("input change", function() { setTextColor(doc, $(this).val(), getActiveTheme(doc)) });
@@ -1917,7 +1913,7 @@ function optionsReaderComponents(doc) {
     if (hrefLink) {
       // Copy the link to the clipboard
       navigator.clipboard.writeText(hrefLink).then(() => {
-        console.log("Copied link - ", hrefLink);
+        //console.log("Copied link - ", hrefLink);
   
         // Hide the original link
         linkElement.hide();
@@ -1935,7 +1931,7 @@ function optionsReaderComponents(doc) {
         }, 1000);
       });
     } else {
-      console.log("Href attribute not found.");
+      //console.log("Href attribute not found.");
     }
   });
   
@@ -1944,65 +1940,65 @@ function optionsReaderComponents(doc) {
   // Save
   $(doc).find(".options-panel-content button[name='save-options-themes'], .options-panel-content button[name='save-options-style'], .options-panel-content button[name='save-options-reader-components']").click(function(e){
     
-    cr_font_family = $(doc).find("#options-font-family select").find(":selected").val();
-    cr_font_size = $(doc).find("#options-font-size input").val().trim();
-    cr_line_height = $(doc).find("#options-line-height input").val().trim();
-    cr_letter_space = $(doc).find("#options-letter-space input").val().trim();
-    cr_max_width = $(doc).find("#options-max-width input").val().trim();
+    reader_ext_font_family = $(doc).find("#options-font-family select").find(":selected").val();
+    reader_ext_font_size = $(doc).find("#options-font-size input").val().trim();
+    reader_ext_line_height = $(doc).find("#options-line-height input").val().trim();
+    reader_ext_letter_space = $(doc).find("#options-letter-space input").val().trim();
+    reader_ext_max_width = $(doc).find("#options-max-width input").val().trim();
     
-    cr_theme = getActiveTheme(doc);
-    cr_theme_sync = getCheckboxStatus($(doc).find("#options-theme-sync input"))
-    cr_background_color_active = $(doc).find("#options-background-color input[name='background_color']").val().trim().toUpperCase();
-    cr_foreground_color_active = $(doc).find("#options-foreground-color input[name='foreground_color']").val().trim().toUpperCase();
-    cr_text_color_active = $(doc).find("#options-text-color input[name='text_color']").val().trim().toUpperCase();
-    cr_link_color_active = $(doc).find("#options-link-color input[name='link_color']").val().trim().toUpperCase();
+    reader_ext_theme = getActiveTheme(doc);
+    reader_ext_theme_sync = getCheckboxStatus($(doc).find("#options-theme-sync input"))
+    reader_ext_background_color_active = $(doc).find("#options-background-color input[name='background_color']").val().trim().toUpperCase();
+    reader_ext_foreground_color_active = $(doc).find("#options-foreground-color input[name='foreground_color']").val().trim().toUpperCase();
+    reader_ext_text_color_active = $(doc).find("#options-text-color input[name='text_color']").val().trim().toUpperCase();
+    reader_ext_link_color_active = $(doc).find("#options-link-color input[name='link_color']").val().trim().toUpperCase();
     
-    cr_auto_dark_panel = getCheckboxStatus( $(doc).find("#options-dark-panel input") );
-    cr_display_footer = getCheckboxStatus( $(doc).find("#options-display-footer input") );
-    cr_display_outline = getCheckboxStatus( $(doc).find("#options-display-outline input") );
-    cr_display_images = getCheckboxStatus( $(doc).find("#options-display-images input") );
-    cr_display_meta = getCheckboxStatus( $(doc).find("#options-display-meta input") );
-    cr_display_author = getCheckboxStatus( $(doc).find("#options-display-author input") );
-    cr_display_reading_time = getCheckboxStatus( $(doc).find("#options-display-reading-time input") );
-    cr_display_saved_info = getCheckboxStatus( $(doc).find("#options-display-saved-info input") );
+    reader_ext_auto_dark_panel = getCheckboxStatus( $(doc).find("#options-dark-panel input") );
+    reader_ext_display_footer = getCheckboxStatus( $(doc).find("#options-display-footer input") );
+    reader_ext_display_outline = getCheckboxStatus( $(doc).find("#options-display-outline input") );
+    reader_ext_display_images = getCheckboxStatus( $(doc).find("#options-display-images input") );
+    reader_ext_display_meta = getCheckboxStatus( $(doc).find("#options-display-meta input") );
+    reader_ext_display_author = getCheckboxStatus( $(doc).find("#options-display-author input") );
+    reader_ext_display_reading_time = getCheckboxStatus( $(doc).find("#options-display-reading-time input") );
+    reader_ext_display_saved_info = getCheckboxStatus( $(doc).find("#options-display-saved-info input") );
 
     //////////////////////////////////////////
 
 
     if(font_family_changed){
-      saveStorageValue("cr_font_family", cr_font_family);
-      console.log("font family saved - ", cr_font_family);
-      previousFontFamily = cr_font_family;
+      saveStorageValue("reader_ext_font_family", reader_ext_font_family);
+      //console.log("font family saved - ", reader_ext_font_family);
+      previousFontFamily = reader_ext_font_family;
       font_family_changed = false;
-    }else{console.log("font family not saved(no changes recorded)")};
+    }else{};
 
     if(font_size_changed){
-      saveStorageValue("cr_font_size", cr_font_size);
-      console.log("font size sved - ", cr_font_size);
-      previousFontSize = cr_font_size;
+      saveStorageValue("reader_ext_font_size", reader_ext_font_size);
+      //console.log("font size sved - ", reader_ext_font_size);
+      previousFontSize = reader_ext_font_size;
       font_size_changed = false;
-    }else{console.log("font size not saved(no changes recorded)")};
+    }else{};
 
     if(line_height_changed){
-      saveStorageValue("cr_line_height", cr_line_height);
-      console.log("line height saved - ", cr_line_height);
-      previousLineHeight = cr_line_height;
+      saveStorageValue("reader_ext_line_height", reader_ext_line_height);
+      //console.log("line height saved - ", reader_ext_line_height);
+      previousLineHeight = reader_ext_line_height;
       font_size_changed = false;
-    }else{console.log("line height not saved(no changes recorded)")};
+    }else{};
 
     if(letter_space_changed){
-      saveStorageValue("cr_letter_space", cr_letter_space);
-      console.log("letter space changed - ", cr_letter_space);
-      previousLetterSpace = cr_letter_space;
+      saveStorageValue("reader_ext_letter_space", reader_ext_letter_space);
+      //console.log("letter space changed - ", reader_ext_letter_space);
+      previousLetterSpace = reader_ext_letter_space;
       letter_space_changed = false;
-    }else{console.log("letter space not saved(no changes recorded)")};
+    }
 
     if(max_width_changed){
-      saveStorageValue("cr_max_width", cr_max_width);
-      console.log("max width saved - ", max_width_changed);
-      previousMaxWidth = cr_max_width;
+      saveStorageValue("reader_ext_max_width", reader_ext_max_width);
+      //console.log("max width saved - ", max_width_changed);
+      previousMaxWidth = reader_ext_max_width;
       max_width_changed = false;
-    }else{console.log("max width not saved(no changes recorded)")}
+    }
 
     saving = true;
     showStyleSave(doc);
@@ -2012,134 +2008,130 @@ function optionsReaderComponents(doc) {
     /////////////////////////////////////////////////
 
 
-    if (cr_theme == "light-theme") {
-      cr_background_color_light = cr_background_color_active;
-      cr_foreground_color_light = cr_foreground_color_active;
-      cr_text_color_light = cr_text_color_active;
-      cr_link_color_light = cr_link_color_active;
+    if (reader_ext_theme == "light-theme") {
+      reader_ext_background_color_light = reader_ext_background_color_active;
+      reader_ext_foreground_color_light = reader_ext_foreground_color_active;
+      reader_ext_text_color_light = reader_ext_text_color_active;
+      reader_ext_link_color_light = reader_ext_link_color_active;
       
-      saveStorageValue("cr_background_color_light", cr_background_color_active);
-      saveStorageValue("cr_foreground_color_light", cr_foreground_color_active);
-      saveStorageValue("cr_text_color_light", cr_text_color_active);
-      saveStorageValue("cr_link_color_light", cr_link_color_active);
+      saveStorageValue("reader_ext_background_color_light", reader_ext_background_color_active);
+      saveStorageValue("reader_ext_foreground_color_light", reader_ext_foreground_color_active);
+      saveStorageValue("reader_ext_text_color_light", reader_ext_text_color_active);
+      saveStorageValue("reader_ext_link_color_light", reader_ext_link_color_active);
       
-    } else if (cr_theme == "dark-theme") {
-      cr_background_color_dark = cr_background_color_active;
-      cr_foreground_color_dark = cr_foreground_color_active;
-      cr_text_color_dark = cr_text_color_active;
-      cr_link_color_dark = cr_link_color_active;
+    } else if (reader_ext_theme == "dark-theme") {
+      reader_ext_background_color_dark = reader_ext_background_color_active;
+      reader_ext_foreground_color_dark = reader_ext_foreground_color_active;
+      reader_ext_text_color_dark = reader_ext_text_color_active;
+      reader_ext_link_color_dark = reader_ext_link_color_active;
       
 
-      saveStorageValue("cr_background_color_dark", cr_background_color_active);
-      saveStorageValue("cr_foreground_color_dark", cr_foreground_color_active);
-      saveStorageValue("cr_text_color_dark", cr_text_color_active);
-      saveStorageValue("cr_link_color_dark", cr_link_color_active);
+      saveStorageValue("reader_ext_background_color_dark", reader_ext_background_color_active);
+      saveStorageValue("reader_ext_foreground_color_dark", reader_ext_foreground_color_active);
+      saveStorageValue("reader_ext_text_color_dark", reader_ext_text_color_active);
+      saveStorageValue("reader_ext_link_color_dark", reader_ext_link_color_active);
      
-    } else if (cr_theme == "custom-theme") {
-      console.log("saving custom theme(1)")
-      cr_background_color_custom = cr_background_color_active;
-      cr_foreground_color_custom = cr_foreground_color_active;
-      console.log("saving: ", cr_background_color_custom, " = ", cr_background_color_active)
-      console.log("saving: ", cr_foreground_color_custom, " = ", cr_foreground_color_active)
-      cr_text_color_custom = cr_text_color_active;
-      cr_link_color_custom = cr_link_color_active;
+    } else if (reader_ext_theme == "custom-theme") {
+      //console.log("saving custom theme(1)")
+      reader_ext_background_color_custom = reader_ext_background_color_active;
+      reader_ext_foreground_color_custom = reader_ext_foreground_color_active;
+      //console.log("saving: ", reader_ext_background_color_custom, " = ", reader_ext_background_color_active)
+      //console.log("saving: ", reader_ext_foreground_color_custom, " = ", reader_ext_foreground_color_active)
+      reader_ext_text_color_custom = reader_ext_text_color_active;
+      reader_ext_link_color_custom = reader_ext_link_color_active;
       
       if(background_color_changed){
-        saveStorageValue("cr_background_color", cr_background_color_active);
-        console.log("CUSTOM BACKGROUND SAVED - ", cr_background_color_active);
-        previousBackgroundColor = cr_background_color_active;
+        saveStorageValue("reader_ext_background_color", reader_ext_background_color_active);
+        //console.log("CUSTOM BACKGROUND SAVED - ", reader_ext_background_color_active);
+        previousBackgroundColor = reader_ext_background_color_active;
         background_color_changed = false;
-      }else{console.log("CUSTOM BACKGROUND NOT SAVED")}
+      }
 
       if(foreground_color_changed){
-        saveStorageValue("cr_foreground_color", cr_foreground_color_active);
-        console.log("CUSTOM FOREGROUND SAVED - ", cr_foreground_color_active);
-        previousForegroundColor = cr_foreground_color_active;
+        saveStorageValue("reader_ext_foreground_color", reader_ext_foreground_color_active);
+        //console.log("CUSTOM FOREGROUND SAVED - ", reader_ext_foreground_color_active);
+        previousForegroundColor = reader_ext_foreground_color_active;
         foreground_color_changed = false;
       }
 
       if(text_color_changed){
-        saveStorageValue("cr_text_color", cr_text_color_active);
-        console.log("CUSTOM TEXT SAVED - ", cr_text_color_active);
-        previousTextColor = cr_text_color_active;
+        saveStorageValue("reader_ext_text_color", reader_ext_text_color_active);
+        //console.log("CUSTOM TEXT SAVED - ", reader_ext_text_color_active);
+        previousTextColor = reader_ext_text_color_active;
         text_color_changed = false;
       }
 
       if(link_color_changed){
-        saveStorageValue("cr_link_color", cr_link_color_active);
-        console.log("CUSTOM LINK SAVED - ", cr_link_color_active);
-        previousLinkColor = cr_link_color_active;
+        saveStorageValue("reader_ext_link_color", reader_ext_link_color_active);
+        //console.log("CUSTOM LINK SAVED - ", reader_ext_link_color_active);
+        previousLinkColor = reader_ext_link_color_active;
         link_color_changed = false;
       }
     
     }
-    setTheme(doc, cr_theme,true);
+    setTheme(doc, reader_ext_theme,true);
     saving = true;
     showThemeSave(doc)
-    console.log("saved theme")
+    //console.log("saved theme")
 
 
     if(dark_panel_changed){
-      saveStorageValue("cr_dark_panel", cr_auto_dark_panel);
-      console.log("Dark Panel changes saved - ", cr_auto_dark_panel);
-      previousDarkPanel = cr_auto_dark_panel;
+      saveStorageValue("reader_ext_dark_panel", reader_ext_auto_dark_panel);
+      //console.log("Dark Panel changes saved - ", reader_ext_auto_dark_panel);
+      previousDarkPanel = reader_ext_auto_dark_panel;
       dark_panel_changed = false;
     }else{
-      console.log("Dark Panel not saved(no changes recorded)");
+      //console.log("Dark Panel not saved(no changes recorded)");
     }
 
     if(footer_changed){
-      saveStorageValue("cr_display_footer", cr_display_footer);
-      console.log("footer changes saved - ", cr_display_footer);
-      previousFooter = cr_display_footer;
+      saveStorageValue("reader_ext_display_footer", reader_ext_display_footer);
+      //console.log("footer changes saved - ", reader_ext_display_footer);
+      previousFooter = reader_ext_display_footer;
       footer_changed = false;
     }else{
-      console.log("Footer not saved(no changes recorded)");
+      //console.log("Footer not saved(no changes recorded)");
     }
 
     if(outline_changed){
-      saveStorageValue("cr_display_outline", cr_display_outline);
-      console.log("outline saved - ", cr_display_outline);
-      previousOutline = cr_display_outline;
+      saveStorageValue("reader_ext_display_outline", reader_ext_display_outline);
+      //console.log("outline saved - ", reader_ext_display_outline);
+      previousOutline = reader_ext_display_outline;
       outline_changed = false;
     }else{
-      console.log("Outline not saved(no changes recorded)");
+      //console.log("Outline not saved(no changes recorded)");
     }
 
     if(images_changed){
-      saveStorageValue("cr_display_images", cr_display_images);
-      console.log("images saved - ", cr_display_images);
-      previousImages = cr_display_images;
+      saveStorageValue("reader_ext_display_images", reader_ext_display_images);
+      //console.log("images saved - ", reader_ext_display_images);
+      previousImages = reader_ext_display_images;
       images_changed = false;
     }else{
-      console.log("images not saved(no changes recorded)");
+      //console.log("images not saved(no changes recorded)");
     }
 
     if(meta_changed){
-      saveStorageValue("cr_display_meta", cr_display_meta);
-      console.log("meta saved - ", cr_display_meta);
-      previousMeta = cr_display_meta;
+      saveStorageValue("reader_ext_display_meta", reader_ext_display_meta);
+      //console.log("meta saved - ", reader_ext_display_meta);
+      previousMeta = reader_ext_display_meta;
       meta_changed = false;
     }else{
-      console.log("meta not saved(no changes recorded)");
+      //console.log("meta not saved(no changes recorded)");
     }
 
     if(author_changed){
-      saveStorageValue("cr_display_author", cr_display_author);
-      console.log("author saved - ", cr_display_author);
-      previousAuthor = cr_display_author;
+      saveStorageValue("reader_ext_display_author", reader_ext_display_author);
+      previousAuthor = reader_ext_display_author;
       author_changed = false;
     }else{
-      console.log("author not saved(no changes recorded)");
+      //console.log("author not saved(no changes recorded)");
     }
 
     if(read_time_changed){
-      saveStorageValue("cr_display_reading_time", cr_display_reading_time);
-      console.log("read time saved - ", cr_display_author);
-      previousReadTime = cr_display_reading_time;
+      saveStorageValue("reader_ext_display_reading_time", reader_ext_display_reading_time);
+      previousReadTime = reader_ext_display_reading_time;
       read_time_changed = false;
-    }else{
-      console.log("read time not saved(no changes recorded)")
     }
     
     saving = true;
@@ -2168,18 +2160,6 @@ function showToast(doc, type, message, e){
     //$(doc).find(".toast").css({"background-color": '#464545'});
     $(doc).find(".toast").css({"text-color": 'black'});
 
-    // if(type == 'success'){
-    //   toast.classList.add('success');
-    //   toastTimeout = 4000;
-    // }
-    // if(type == 'warning'){
-    //   toast.classList.add('warning');
-    //   toastTimeout = 5000;
-    // }
-    // if(type == 'error'){
-    //   toast.classList.add('error');
-    //   toastTimeout = 6000;
-    // }
     if(type == 'copylink'){
       toast.classList.add('copylink');
       toastTimeout = 2400;
@@ -2201,7 +2181,7 @@ function showSaveLabel(doc, e){
     // Create the text label element
     var textLabel = $("<span class='text-info save-label' id='ui-save-label'>Saved!</span>");
     var button = $($(e.target).closest('button')).attr('name'); // Find the closest button ancestor
-    console.log("target: ",$(e.target));
+    //console.log("target: ",$(e.target));
 
     // Get the font properties of the save button
 
@@ -2235,7 +2215,7 @@ function showSaveLabel(doc, e){
     textLabel.css(buttonFont);
     textLabel.css('height', buttonHeight + 'px');
     textLabel.css('padding-top', buttonPadding + 'px');
-    console.log("e: ", $(e.target).closest('button').attr('name'), ', height: ', buttonHeight, ', padding: ', buttonPadding);
+    //console.log("e: ", $(e.target).closest('button').attr('name'), ', height: ', buttonHeight, ', padding: ', buttonPadding);
 
     // Insert the text label after the target element (save button)
     textLabel.insertAfter($(e.target).closest('button'));
@@ -2254,8 +2234,8 @@ function removeSaveLabel(doc) {
   if (textLabel.length > 0) {
     // Remove the text label
     textLabel.remove();
-    console.log("SAVE LABEL REMOVED");
-  }else{console.log("NO SAVE LABEL FOUND")};
+    //console.log("SAVE LABEL REMOVED");
+  }
 }
 
 
@@ -2294,15 +2274,15 @@ function markAsChanged(changedElement){
     case 15:
       read_time_changed = !read_time_changed;
     default:
-      console.log("Error, changed value not found!");
+      //console.log("Error, changed value not found!");
   }
-  console.log("changed value #", changedElement);
+  //console.log("changed value #", changedElement);
 }
 
 
 function init(){
   // Initialize iframe & doc
-  var iframe = document.getElementById('cr-iframe');
+  var iframe = document.getElementById('reader-ext-iframe');
   var doc = iframe.contentWindow.document;
 
   // Get parsed article
@@ -2322,7 +2302,7 @@ function init(){
   // Remove Media Playback from content
   content = content.replace("Media playback is unsupported on your device", "");
 
-  // Fetch template for reader mode
+  // Fetch template for reader
   fetch(chrome.runtime.getURL('/content.html'))
   .then(response => response.text())
   .then(data => {
@@ -2339,19 +2319,19 @@ function init(){
     // Set content outline
     setOutline(doc, article);
     // Set default main content
-    $(doc).find("#cr-title").html(title);
-    $(doc).find("#cr-content").html(content);
+    $(doc).find("#reader-ext-title").html(title);
+    $(doc).find("#reader-ext-content").html(content);
     setHeadingsForOutline(doc);
-    $(doc).find("#cr-content a").attr("target", "_blank");
+    $(doc).find("#reader-ext-content a").attr("target", "_blank");
     // Add meta, title, and reading-time
     if (article_url) {
-      $(doc).find("#cr-meta").append("<li id='cr-meta-url'><i class='fas fa-link'></i><span class='truncated'><a id='sitelinkcopy' href='"+article_url+"'  target='_blank' >"+article_url+"</a></span><li>");
+      $(doc).find("#reader-ext-meta").append("<li id='reader-ext-meta-url'><i class='bx bx-link' ></i><span class='truncated'><a id='sitelinkcopy' href='"+article_url+"'  target='_blank' >"+article_url+"</a></span><li>");
     }
     if (author) {
-      $(doc).find("#cr-meta").append("<li id='cr-meta-author'><i class='fas fa-pen-fancy'></i><span class='cr-author truncated'>"+author+"</span><li>");
+      $(doc).find("#reader-ext-meta").append("<li id='reader-ext-meta-author'><i class='bx bxs-user' ></i><span class='reader-ext-author truncated'>"+author+"</span><li>");
     }
     if (reading_time) {
-      $(doc).find("#cr-meta").append("<li id='cr-meta-reading-time'><i class='far fa-clock'></i><span>"+reading_time+"</span><li>");
+      $(doc).find("#reader-ext-meta").append("<li id='reader-ext-meta-reading-time'><i class='bx bx-time-five' ></i><span>"+reading_time+"</span><li>");
     }
 
     // Trim content
@@ -2387,8 +2367,8 @@ function init(){
     // Display iframe
     $(iframe).show();
     setTimeout(function(){
-      $(doc).find("#cr-pre-loader").fadeOut();
-      $(doc).find("#cr-body").show();
+      $(doc).find("#reader-ext-pre-loader").fadeOut();
+      $(doc).find("#reader-ext-body").show();
 
     }, 500);
   }).catch(err => {
@@ -2396,24 +2376,57 @@ function init(){
   });
 }
 var latest_url;
-var readerActive
+// var readerActive
+function launch() {
+  var existing = document.querySelector('#reader-ext-iframe');
+  console.log('existing iframe:', existing);
+
+  // Detect past iframe - don't show another
+  if (existing == null) {
+    console.log('No iframe found');
+    // Create iframe and append to body
+    iframe = createIframe();
+    document.body.appendChild(iframe);
+    latest_url = window.location.href;
+    init();
+    console.log('created iframe')
+    // readerActive = true
+  } else {
+    removeIframe()
+    // If iframe is already present, remove it
+    // console.log('Existing iframe found');
+    // var iframe = existing;
+    // if ($(iframe).is(':visible')) {
+    //   $(iframe).fadeOut();
+    // } else {
+    //   // Only parse the article if the URL was changed
+    //   if (latest_url == window.location.href) {
+    //     $(iframe).fadeIn();
+    //   } else {
+    //     latest_url = window.location.href;
+    //     init();
+    //   }
+    // }
+    // console.log("Toggled iframe visibility:", iframe);
+    // readerActive = false;
+  }
+}
+
 // function launch() {
-//   console.log('existing iframe - ', readerActive)
-//   // Detect past iframe - don't show another
-//   if (document.getElementById("cr-iframe") == null) {
+
+//   // Detect past iframe - don't create another
+//   if(document.getElementById("reader-ext-iframe") == null || window == window.top) {
+//     $("#reader-ext-iframe").remove()
+//     //console.log('found and remove existing iframe')
 //     // Create iframe and append to body
-//     iframe = createIframe();
+//     var iframe = createIframe();
 //     document.body.appendChild(iframe);
-//     readerActive = true
+
 //     latest_url = window.location.href;
 //     init();
-    
-//     console.log("created iframe - ", iframe);
 //   } else {
-//     // If iframe is already present, remove it
-//     //removeIframe();
-//     readerActive = false
-//     iframe = document.getElementById("cr-iframe");
+//     //console.log('no existing iframe found')
+//     iframe = document.getElementById("reader-ext-iframe");
 //     if($(iframe).is(':visible')){
 //       $(iframe).fadeOut();
 //     } else {
@@ -2425,37 +2438,9 @@ var readerActive
 //         init();
 //       }
 //     }
-//     console.log("removed iframe - ", iframe);
 //   }
+
 // }
-
-function launch() {
-
-  // Detect past iframe - don't create another
-  if(document.getElementById("cr-iframe") == null || window == window.top) {
-    $("#cr-iframe").remove()
-    // Create iframe and append to body
-    var iframe = createIframe();
-    document.body.appendChild(iframe);
-
-    latest_url = window.location.href;
-    init();
-  } else {
-    iframe = document.getElementById("cr-iframe");
-    if($(iframe).is(':visible')){
-      $(iframe).fadeOut();
-    } else {
-      // Only parse the article if the url was changed
-      if (latest_url == window.location) {
-        $(iframe).fadeIn();
-      } else {
-        latest_url = window.location.href;
-        init();
-      }
-    }
-  }
-
-}
 
 // Create iframe
 function createIframe(){
@@ -2464,7 +2449,7 @@ function createIframe(){
   document.body.style.overflow = 'hidden';
 
   var iframe = document.createElement('iframe');
-  iframe.id = "cr-iframe";
+  iframe.id = "reader-ext-iframe";
   iframe.style.height = "100%";
   iframe.style.width="100%";
   iframe.style.position = "fixed";
@@ -2476,15 +2461,15 @@ function createIframe(){
 
   preloader = getPreloader();
   $(iframe).contents().find('body').html(preloader);
-  //console.log(iframe)
+  ////console.log(iframe)
   return iframe;
 }
 
 function removeIframe() {
-    console.log("removing iframe - ");
-    $("#cr-iframe").remove();
+    //console.log("removing iframe - ");
+    $("#reader-ext-iframe").remove();
     iframe = null;
-    console.log("removed iframe - ");
+    //console.log("removed iframe - ");
     document.body.style.overflow = 'auto';
 }
 

@@ -7,7 +7,7 @@
   
   "short_name": "Reader.",
 
-  "version": "1.1",
+  "version": "1.2.3.6",
   
   "description": "Reader Mode for Chrome",
 
@@ -25,8 +25,6 @@
   "content_security_policy": {
     "sandbox": "sandbox allow-scripts; 'unsafe-inline' 'self'"
   },
-
-  "host_permissions": ["<all_urls>"],
 
   "action": {
     "default_title": "Reader.",

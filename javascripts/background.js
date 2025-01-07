@@ -1,4 +1,4 @@
-function t(e) {
+function i(e) {
   chrome.scripting.executeScript({
       target: {
           tabId: e.id,
@@ -13,9 +13,7 @@ function t(e) {
   })
 }
 
-function i(e) {
-  t(e)
-}
+var linkCMId, articles_checked_for_current_url
 chrome.action.onClicked.addListener((e => {
   i(e)
 })), chrome.contextMenus.create({
@@ -31,11 +29,11 @@ chrome.action.onClicked.addListener((e => {
       active: !0
   }, (function(e) {
       let t = e[0];
-      startReader(t)
+      i(t)
   })) : "view-linked-page" == e.menuItemId && e.linkUrl && chrome.tabs.create({
       url: e.linkUrl,
       active: !1
   }, (function(e) {
-      t(e)
+      i(e)
   }))
 })), articles_checked_for_current_url = !1;

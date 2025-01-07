@@ -1,22 +1,16 @@
 <head>
-
 </head>
-
-
-
-<div id="cr-body" style="display: none;position:relative;">
-  
-
+<div id="reader-ext-body" style="display: none;position:relative;">
   <!-- Outline -->
-  <div id="cr-outline" class="cr-sidebar-section no-print main-stuff">
+  <div id="reader-ext-outline" class="reader-ext-sidebar-section no-print main-stuff">
     <h3>OUTLINE</h3>
-    <ul id="cr-outline-list">
+    <ul id="reader-ext-outline-list">
     </ul>
   </div>
 
-  <div class="main-stuff" id="cr-container">
+  <div class="main-stuff" id="reader-ext-container">
     <!-- Saved notice -->
-    <div id="cr-saved-notice" style="display:none;">
+    <div id="reader-ext-saved-notice" style="display:none;">
       <i class='fas fa-check-circle m-r-3'></i> Saved
     </div>
     
@@ -29,25 +23,25 @@
     <ul id="options-menu" class="no-print main-stuff">
       <li>
         <a href="#/" id="options-close" class="tooltip" title="Close">
-          <i class="material-icons">close</i>
+          <i class='bx bx-x'></i>
         </a>
       </li>
       <li>
         <a href="#/" id="options-fullscreen" class="tooltip" title="Fullscreen">
-          <i class="material-icons enter">fullscreen</i>
-          <i class="material-icons exit" style="display: none;">fullscreen_exit</i>
+          <i class='bx bx-fullscreen'></i>
+          <i class='bx bx-exit-fullscreen' style="display: none;"></i>
         </a>
       </li>
       
       <li>
         <a href="#/" id="options-print" class="tooltip" title="Print">
-          <i class="material-icons">print</i>
+          <i class='bx bxs-printer'></i>
         </a>
       </li>
       
       <li>
         <a href="#/" id="options-main-panel-toggle" data-panel="options-main-panel" class="tooltip" title="Settings">
-          <i class="material-icons">tune</i>
+          <i class='bx bxs-edit-alt'></i>
         </a>
       </li>
 
@@ -55,7 +49,7 @@
 
     <!-- Main Panel -->
     <div id="options-main-panel" class="options-panel no-print" style="display:none;">
-      <button class="options-panel-header active"><i class="fas fa-font"></i> &nbsp;STYLE <i class="fas fa-chevron-down marker"></i></button>
+      <button class="options-panel-header active"><i class='bx bx-file'></i> &nbsp;Layout <i class="fas fa-chevron-down marker"></i></button>
       <div class="options-panel-content active">
         <!--<label class="label-header">BASICS</label>-->
 
@@ -139,14 +133,14 @@
         </div>
       </div>
 
-      <button class="options-panel-header"><i class="fas fa-swatchbook"></i> &nbsp;THEMES <i class="fas fa-chevron-down marker"></i></button>
+      <button class="options-panel-header"><i class='bx bxs-palette'></i> &nbsp;Themes <i class="fas fa-chevron-down marker"></i></button>
       <div class="options-panel-content" id="themes-panel">
         
         <div id="options-theme-sync" class="options-panel-content-section">
           <label class="float-left">Sync to Device</label>
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_theme_sync" name="theme_sync" class="switch-input">
-            <label for="cr_theme_sync" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_theme_sync" name="theme_sync" class="switch-input">
+            <label for="reader_ext_theme_sync" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
@@ -212,22 +206,22 @@
         
       </div>
 
-      <button class="options-panel-header"><i class="fas fa-columns"></i> &nbsp;Options <i class="fas fa-chevron-down marker"></i></button>
-      <div class="options-panel-content">
+      <button class="options-panel-header"><i class='bx bxs-cog'></i> &nbsp;Options <i class="fas fa-chevron-down marker"></i></button>
+      <div class="options-panel-content options-footer">
 
         <div id="options-dark-panel" class="options-panel-content-section">
           <label class="float-left">Dark Panel</label>
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_dark_panel" name="dark_panel" class="switch-input">
-            <label for="cr_dark_panel" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_dark_panel" name="dark_panel" class="switch-input">
+            <label for="reader_ext_dark_panel" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
         <div id="options-display-footer" class="options-panel-content-section">
           <label class="float-left">Footer</label>
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_display_footer" name="footer" class="switch-input">
-            <label for="cr_display_footer" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_display_footer" name="footer" class="switch-input">
+            <label for="reader_ext_display_footer" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
@@ -235,16 +229,16 @@
           <label class="float-left">Outline</label>
 
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_display_outline" name="outline" class="switch-input">
-            <label for="cr_display_outline" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_display_outline" name="outline" class="switch-input">
+            <label for="reader_ext_display_outline" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
         <div id="options-display-images" class="options-panel-content-section">
           <label class="float-left">Images</label>
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_display_images" name="display_images" class="switch-input">
-            <label for="cr_display_images" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_display_images" name="display_images" class="switch-input">
+            <label for="reader_ext_display_images" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
@@ -252,8 +246,8 @@
           <label class="float-left">Meta</label>
 
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_display_meta" name="display_meta" class="switch-input">
-            <label for="cr_display_meta" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_display_meta" name="display_meta" class="switch-input">
+            <label for="reader_ext_display_meta" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
@@ -261,8 +255,8 @@
           <label class="float-left">Author</label>
 
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_display_author" name="display_author" class="switch-input">
-            <label for="cr_display_author" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_display_author" name="display_author" class="switch-input">
+            <label for="reader_ext_display_author" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
 
@@ -270,8 +264,8 @@
           <label class="float-left">Reading Time</label>
 
           <div class="float-right m-t-7">
-            <input type="checkbox" id="cr_display_reading_time" name="display_reading_time" class="switch-input">
-            <label for="cr_display_reading_time" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
+            <input type="checkbox" id="reader_ext_display_reading_time" name="display_reading_time" class="switch-input">
+            <label for="reader_ext_display_reading_time" class="switch-label"><span class="toggle--on"></span><span class="toggle--off"></span></label>
           </div>
         </div>
         <div class="center-btn-container">
@@ -286,30 +280,30 @@
     
   <section id = "reader-foreground" class = "main-stuff" style="padding: 40; padding-top: 15; border-radius: 5px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2)">
     <!-- Meta -->
-    <ul id="cr-meta" style="display: none">
+    <ul id="reader-ext-meta" style="display: none">
     </ul>
 
     <!-- Main Content -->
-    <div id="cr-content-container">
-      <div id="cr-content-wrapper">
-        <h1 id="cr-title"></h1>
-        <div id="cr-content"></div>
+    <div id="reader-ext-content-container">
+      <div id="reader-ext-content-wrapper">
+        <h1 id="reader-ext-title"></h1>
+        <div id="reader-ext-content"></div>
       </div>
 
-      <div id="cr-ruler" class="no-print" style="display:none"></div>
+      <div id="reader-ext-ruler" class="no-print" style="display:none"></div>
 
-      <div id="cr-toolbar">
+      <div id="reader-ext-toolbar">
         <ul class="crt-left">
           
         </ul>
         <ul class="crt-right">
           <li>
-            <a href="#/" id="cr-toolbar-search">
-              <i class="material-icons">search</i>
+            <a href="#/" id="reader-ext-toolbar-search">
+              <i class='bx bx-search-alt-2'></i>
             </a>
           </li>
           <li>
-            <a href="#/" id="cr-toolbar-translate">
+            <a href="#/" id="reader-ext-toolbar-translate">
               <i class="material-icons">g_translate</i>
             </a>
           </li>
@@ -320,23 +314,11 @@
   </section>
 
     <!-- Footer -->
-    <div class = "main-stuff" id="cr-footer">
-      <p>Generated with <a href="https://chromewebstore.google.com/detail/reader/egjjcdhmghilihegkekmhdfhgcafffof" target="_blank" class="cr-footer-brand"> Reader.</a></p>
+    <div class = "main-stuff" id="reader-ext-footer">
+      <p>Generated with <a href="https://chromewebstore.google.com/detail/reader/egjjcdhmghilihegkekmhdfhgcafffof" target="_blank" class="reader-ext-footer-brand"> Reader.</a></p>
       <ul class="no-print">
         
       </ul>
     </div>
 
 </div>
-
-<!--
-<script type="text/javascript">
-  (function() {
-    // Tlite
-    function tlite(t){document.addEventListener("mouseover",function(e){var i=e.target,n=t(i);n||(n=(i=i.parentElement)&&t(i)),n&&tlite.show(i,n,!0)})}tlite.show=function(t,e,i){var n="data-tlite";e=e||{},(t.tooltip||function(t,e){function o(){tlite.hide(t,!0)}function l(){r||(r=function(t,e,i){function n(){o.className="tlite tlite-"+r+s;var e=t.offsetTop,i=t.offsetLeft;o.offsetParent===t&&(e=i=0);var n=t.offsetWidth,l=t.offsetHeight,d=o.offsetHeight,f=o.offsetWidth,a=i+n/2;o.style.top=("s"===r?e-d-10:"n"===r?e+l+10:e+l/2-d/2)+"px",o.style.left=("w"===s?i:"e"===s?i+n-f:"w"===r?i+n+10:"e"===r?i-f-10:a-f/2)+"px"}var o=document.createElement("span"),l=i.grav||t.getAttribute("data-tlite")||"n";o.innerHTML=e,t.appendChild(o);var r=l[0]||"",s=l[1]||"";n();var d=o.getBoundingClientRect();return"s"===r&&d.top<0?(r="n",n()):"n"===r&&d.bottom>window.innerHeight?(r="s",n()):"e"===r&&d.left<0?(r="w",n()):"w"===r&&d.right>window.innerWidth&&(r="e",n()),o.className+=" tlite-visible",o}(t,d,e))}var r,s,d;return t.addEventListener("mousedown",o),t.addEventListener("mouseleave",o),t.tooltip={show:function(){d=t.title||t.getAttribute(n)||d,t.title="",t.setAttribute(n,""),d&&!s&&(s=setTimeout(l,i?150:1))},hide:function(t){if(i===t){s=clearTimeout(s);var e=r&&r.parentNode;e&&e.removeChild(r),r=void 0}}}}(t,e)).show()},tlite.hide=function(t,e){t.tooltip&&t.tooltip.hide(e)},"undefined"!=typeof module&&module.exports&&(module.exports=tlite);
-
-    function classWhen(t){var n=(t.className||"").split(" ");return function(t,o){return~n.indexOf(t)&&o}}tlite(function(t){var o=classWhen(t);return o("tooltip",{grav:"s"})||o("tooltip-n",{grav:"n"})||o("tooltip-s",{grav:"s"})||o("tooltip-w",{grav:"w"})||o("tooltip-e",{grav:"e"})||o("tooltip-se",{grav:"se"})||o("tooltip-ne",{grav:"ne"})||o("tooltip-sw",{grav:"sw"})||o("tooltip-nw",{grav:"nw"})});
-    tlite(function (el) { return el.className === 'tooltip' });
-  })();
-</script>
--->
