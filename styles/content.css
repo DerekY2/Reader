@@ -72,6 +72,11 @@ html {
 .toast {
   position: relative;
 }
+
+#reader-ext-container{
+  min-height: 100%;
+}
+
 #reader-ext-iframe #reader-ext-body,
 #reader-ext-iframe body {
   margin: 0 !important;

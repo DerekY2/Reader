@@ -2453,8 +2453,10 @@ function createIframe(){
   iframe.style.height = "100%";
   iframe.style.width="100%";
   iframe.style.position = "fixed";
-  iframe.style.top = "0px";
-  iframe.style.right = "0px";
+  iframe.style.top = '0';
+  iframe.style.right = '0';
+  iframe.style.left = '0'
+  iframe.style.bottom = '0'
   iframe.style.zIndex = "9000000000000000000";
   iframe.frameBorder = "none";
   iframe.style.backgroundColor = "#fff";
