@@ -2458,8 +2458,8 @@ function createIframe(){
   iframe.style.left = '0'
   iframe.style.bottom = '0'
   iframe.style.zIndex = "9000000000000000000";
-  iframe.frameBorder = "none";
   iframe.style.backgroundColor = "#fff";
+  iframe.sandbox = "allow-scripts allow-same-origin";
 
   preloader = getPreloader();
   $(iframe).contents().find('body').html(preloader);
