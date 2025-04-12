@@ -7,6 +7,7 @@ var reader_ext_font_size = 16;
 var reader_ext_line_height = 1;
 var reader_ext_letter_space = 0;
 var reader_ext_max_width = 680;
+var reader_ext_margin = 29;
 var reader_ext_default_css = `
   #reader-ext-body {
     font-family: Arial, Helvetica, sans-serif;
@@ -142,6 +143,7 @@ var font_size_changed;
 var line_height_changed;
 var letter_space_changed;
 var max_width_changed;
+var margin_changed
 
 var background_color_changed;
 var foreground_color_changed;
@@ -176,6 +178,7 @@ var previousFontSize;
 var previousLineHeight;
 var previousLetterSpace;
 var previousMaxWidth;
+var previousMargin;
 
 var tempThemeSync;
 var tempLastTheme='custom-theme';
@@ -722,24 +725,6 @@ function popupwindow(url, title, w, h) {
   );
 }
 
-// // Save setting's value to storage
-// function saveStorageValue(k, val) {
-//   var original;
-//   var newValue;
-//   chrome.storage.sync.get(k, function(result){
-//     original = result[k]
-//     if(original !=val || !result){
-//       //console.log("About to save - ",original," ==> ", val)
-//       chrome.storage.sync.set({[k]: val});
-//       if(!result){
-//         //console.log("No data for ",k)
-//       }
-//       chrome.storage.sync.get(k, function(result){newValue = result;//console.log("Saved value: \noriginal: ", original, "\nnew: ",newValue)})
-      
-//     }
-//   })
-// }
-
 function saveSessionValue(key, val) {
   chrome.storage.session.get(key, function(result) {
       if (chrome.runtime.lastError) {
@@ -937,6 +922,37 @@ function setMaxWidth(doc, val, save) {
   $(doc).find("#options-max-width .val").attr( "value", val );
   $(doc).find("#options-max-width .val").text(  val );
 }
+
+function setMargin(doc, val, save) {
+
+  if(previousMargin == null){
+    previousMargin = val;
+    //console.log("Max width: No previous data! Setting to - ", previousMaxWidth)
+    showStyleSave(doc)
+  }
+  else if(previousMargin != val){
+    margin_changed = true;
+    //console.log("Max width: Change detected! Marked as changed! Previous:",previousMaxWidth," New:",status)
+    showStyleSave(doc)
+  }
+  else if(previousMargin == val){
+    margin_changed = false;
+    //console.log("Max width: No change detected! Marked as unchanged! Previous:",previousMaxWidth," New:",status)
+    showStyleSave(doc)
+  }
+
+  // Apply the margin to the content container
+  $(doc).find("#reader-foreground").css("padding-left", val + "px");
+  $(doc).find("#reader-foreground").css("padding-right", val + "px");
+  $(doc).find("#options-margin .val").attr( "value", val );
+  $(doc).find("#options-margin .val").text(  val );
+
+  reader_ext_margin = val;
+  if (save) {
+    saveStorageValue('reader_ext_margin', val);
+  }
+}
+
 function setBackgroundColor(doc, val, theme, save) {
   
   
@@ -1583,7 +1599,7 @@ function optionsDefaultSettings(doc) {
   chrome.storage.sync.get(['reader_ext_line_height'],function(result){setLineHeight(doc, (result.reader_ext_line_height) ? result.reader_ext_line_height : 1.84, true) });
   chrome.storage.sync.get(['reader_ext_letter_space'],function(result){setLetterSpace(doc, (result.reader_ext_letter_space) ? result.reader_ext_letter_space : 0, true) });
   chrome.storage.sync.get(['reader_ext_max_width'],function(result){setMaxWidth(doc, (result.reader_ext_max_width) ? result.reader_ext_max_width : 680, true) });
-
+  chrome.storage.sync.get(['reader_ext_margin'], function(result) {setMargin(doc, (result.reader_ext_margin) ? result.reader_ext_margin : 40, true);});
   // Themes
   // Theme & DefaultCSS
   chrome.storage.sync.get(['reader_ext_default_css'], function(result) {
@@ -1734,6 +1750,7 @@ function optionsStyle(doc) {
   $(doc).find("#options-line-height input").on("input change", function() { setLineHeight(doc, $(this).val()); });
   $(doc).find("#options-letter-space input").on("input change", function() { setLetterSpace(doc, $(this).val()); });
   $(doc).find("#options-max-width input").on("input change", function() { setMaxWidth(doc, $(this).val()); });
+  $(doc).find("#options-margin input").on("input change", function() { setMargin(doc, $(this).val()); });
 
   // Save
   $(doc).find(".options-panel-content button[name='save-options-themes'], .options-panel-content button[name='save-options-style'], .options-panel-content button[name='save-options-reader-components']").click(function(e){
@@ -1759,7 +1776,7 @@ var optionsSaveTimeout;
 function showThemeSave(doc){
   
   
-  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
+  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
     updateSaveButtonTheme(doc)
     $(doc).find(".options-panel-content button[name='save-options-style']").show();
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1792,7 +1809,7 @@ function showStyleSave(doc){
   
 
   
-  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
+  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
     updateSaveButtonTheme(doc)
     $(doc).find(".options-panel-content button[name='save-options-style']").show();
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1827,7 +1844,7 @@ function showOptionsSave(doc){
   
 
   
-    if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
+    if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
       updateSaveButtonTheme(doc)
       $(doc).find(".options-panel-content button[name='save-options-style']").show();
       $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1945,6 +1962,7 @@ function optionsReaderComponents(doc) {
     reader_ext_line_height = $(doc).find("#options-line-height input").val().trim();
     reader_ext_letter_space = $(doc).find("#options-letter-space input").val().trim();
     reader_ext_max_width = $(doc).find("#options-max-width input").val().trim();
+    reader_ext_margin = $(doc).find("#options-margin input").val().trim();
     
     reader_ext_theme = getActiveTheme(doc);
     reader_ext_theme_sync = getCheckboxStatus($(doc).find("#options-theme-sync input"))
@@ -1998,6 +2016,13 @@ function optionsReaderComponents(doc) {
       //console.log("max width saved - ", max_width_changed);
       previousMaxWidth = reader_ext_max_width;
       max_width_changed = false;
+    }
+
+    if(margin_changed){
+      saveStorageValue("reader_ext_margin", reader_ext_margin);
+      //console.log("max width saved - ", max_width_changed);
+      previousMargin = reader_ext_margin;
+      margin_changed = false;
     }
 
     saving = true;
