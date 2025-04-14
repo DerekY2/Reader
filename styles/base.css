@@ -41,6 +41,41 @@
 }
 
 @font-face {
+  font-family: 'iowan-old';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/IowanOld/iowan-old.ttf);
+  font-style: normal;
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'iowan-old-bold';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/IowanOld/iowan-old-bold.ttf);
+  font-style: italic;
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'iowan-old-italic';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/IowanOld/iowan-old-italic.ttf);
+  font-style: italic;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'iowan-old-bold-italic';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/IowanOld/iowan-old-bold-italic.ttf);
+  font-style: italic;
+  font-weight: 700;
+}
+
+/*  */
+
+@font-face {
+  font-family: 'Athelas';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Athelas/Athelas-Regular.ttf);
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
   font-family: 'Times-New-Roman';
   src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Times/times.ttf);
   font-style: normal;
