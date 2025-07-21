@@ -130,6 +130,7 @@ var reader_ext_text_color = "#333333";
 var reader_ext_link_color = "#5F6368";
 var reader_ext_theme;
 var reader_ext_theme_sync;
+var reader_ext_dark_scrollbar = "on";
 var reader_ext_dark_panel = "on";
 var reader_ext_display_footer = "on";
 var reader_ext_display_outline = "off";
@@ -150,6 +151,7 @@ var foreground_color_changed;
 var text_color_changed;
 var link_color_changed;
 var theme_sync_changed;
+var dark_scrollbar_changed;
 
 var dark_panel_changed;
 var footer_changed;
@@ -172,6 +174,7 @@ var previousLinkColor;
 var previousTextColor;
 var previousForegroundColor;
 var previousBackgroundColor;
+var previousDarkScrollbar
 
 var previousFontFamily;
 var previousFontSize;
@@ -1214,7 +1217,7 @@ function setTheme(doc, val, save){
     setForegroundColor(doc, reader_ext_foreground_color_dark.toUpperCase(), "dark-theme");
     setTextColor(doc, reader_ext_text_color_dark.toUpperCase(), "dark-theme");
     setLinkColor(doc, reader_ext_link_color_dark.toUpperCase(), "dark-theme");
-    $(doc).find('::-webkit-scrollbar-track').css('background', reader_ext_background_color_dark.toUpperCase());
+    setDarkScroll(doc, reader_ext_dark_scrollbar)
     //console.log("CHANGED TO DARK THEME")
   } else if (val == "custom-theme") {
     showPalette(true, doc);
@@ -1222,7 +1225,7 @@ function setTheme(doc, val, save){
     setForegroundColor(doc, reader_ext_foreground_color.toUpperCase(), "custom-theme");
     setTextColor(doc, reader_ext_text_color.toUpperCase(), "custom-theme");
     setLinkColor(doc, reader_ext_link_color.toUpperCase(), "custom-theme");
-    $(doc).find('::-webkit-scrollbar-track').css('background', reader_ext_background_color.toUpperCase());
+    setDarkScroll(doc, reader_ext_dark_scrollbar)
     //console.log("CHANGED TO CUSTOM THEME")
   }``
 
@@ -1633,6 +1636,7 @@ function optionsDefaultSettings(doc) {
   // Theme (need to be down here bcoz setTheme requires themes' values)
   //console.log("Getting theme...")
   chrome.storage.sync.get(['reader_ext_theme'],function(result){ setTheme(doc, (result.reader_ext_theme ? result.reader_ext_theme : "custom-theme"), false);})
+  chrome.storage.sync.get(['reader_ext_dark_scrollbar'],function(result){setDarkScroll(doc, result.reader_ext_dark_scrollbar ? result.reader_ext_dark_scrollbar : "on") });
 
   // Theme Sync
   chrome.storage.sync.get(['reader_ext_theme_sync'],function(result){ tempThemeSync=(result.reader_ext_theme_sync ? result.reader_ext_theme_sync : "on");setThemeSync(doc, (result.reader_ext_theme_sync) ? result.reader_ext_theme_sync : "on", true) });
@@ -1776,7 +1780,7 @@ var optionsSaveTimeout;
 function showThemeSave(doc){
   
   
-  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
+  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
     updateSaveButtonTheme(doc)
     $(doc).find(".options-panel-content button[name='save-options-style']").show();
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1809,7 +1813,7 @@ function showStyleSave(doc){
   
 
   
-  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
+  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
     updateSaveButtonTheme(doc)
     $(doc).find(".options-panel-content button[name='save-options-style']").show();
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1844,7 +1848,7 @@ function showOptionsSave(doc){
   
 
   
-    if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed){
+    if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
       updateSaveButtonTheme(doc)
       $(doc).find(".options-panel-content button[name='save-options-style']").show();
       $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1903,6 +1907,7 @@ function optionsTheme(doc) {
   $(doc).find("#options-foreground-color input").on("input change", function() { setForegroundColor(doc, $(this).val().toUpperCase(), getActiveTheme(doc)) });
   $(doc).find("#options-text-color input").on("input change", function() { setTextColor(doc, $(this).val(), getActiveTheme(doc)) });
   $(doc).find("#options-link-color input").on("input change", function() { setLinkColor(doc, $(this).val(), getActiveTheme(doc)) });
+  $(doc).find("#options-dark-scrollbar input").change(function() { setDarkScroll(doc, getCheckboxStatus($(this))) });
   
 
   // Save
@@ -1970,6 +1975,7 @@ function optionsReaderComponents(doc) {
     reader_ext_foreground_color_active = $(doc).find("#options-foreground-color input[name='foreground_color']").val().trim().toUpperCase();
     reader_ext_text_color_active = $(doc).find("#options-text-color input[name='text_color']").val().trim().toUpperCase();
     reader_ext_link_color_active = $(doc).find("#options-link-color input[name='link_color']").val().trim().toUpperCase();
+    reader_ext_dark_scrollbar_active = $(doc).find("#options-dark-scrollbar input[name='dark_scrollbar']").val().trim();
     
     reader_ext_auto_dark_panel = getCheckboxStatus( $(doc).find("#options-dark-panel input") );
     reader_ext_display_footer = getCheckboxStatus( $(doc).find("#options-display-footer input") );
@@ -2038,23 +2044,27 @@ function optionsReaderComponents(doc) {
       reader_ext_foreground_color_light = reader_ext_foreground_color_active;
       reader_ext_text_color_light = reader_ext_text_color_active;
       reader_ext_link_color_light = reader_ext_link_color_active;
+      reader_ext_dark_scrollbar = reader_ext_dark_scrollbar_active;
       
       saveStorageValue("reader_ext_background_color_light", reader_ext_background_color_active);
       saveStorageValue("reader_ext_foreground_color_light", reader_ext_foreground_color_active);
       saveStorageValue("reader_ext_text_color_light", reader_ext_text_color_active);
       saveStorageValue("reader_ext_link_color_light", reader_ext_link_color_active);
+      saveStorageValue("reader_ext_dark_scrollbar", reader_ext_dark_scrollbar_active);
       
     } else if (reader_ext_theme == "dark-theme") {
       reader_ext_background_color_dark = reader_ext_background_color_active;
       reader_ext_foreground_color_dark = reader_ext_foreground_color_active;
       reader_ext_text_color_dark = reader_ext_text_color_active;
       reader_ext_link_color_dark = reader_ext_link_color_active;
+      reader_ext_dark_scrollbar = reader_ext_dark_scrollbar_active;
       
 
       saveStorageValue("reader_ext_background_color_dark", reader_ext_background_color_active);
       saveStorageValue("reader_ext_foreground_color_dark", reader_ext_foreground_color_active);
       saveStorageValue("reader_ext_text_color_dark", reader_ext_text_color_active);
       saveStorageValue("reader_ext_link_color_dark", reader_ext_link_color_active);
+      saveStorageValue("reader_ext_dark_scrollbar", reader_ext_dark_scrollbar_active);
      
     } else if (reader_ext_theme == "custom-theme") {
       //console.log("saving custom theme(1)")
@@ -2064,6 +2074,7 @@ function optionsReaderComponents(doc) {
       //console.log("saving: ", reader_ext_foreground_color_custom, " = ", reader_ext_foreground_color_active)
       reader_ext_text_color_custom = reader_ext_text_color_active;
       reader_ext_link_color_custom = reader_ext_link_color_active;
+      reader_ext_dark_scrollbar = reader_ext_dark_scrollbar_active;
       
       if(background_color_changed){
         saveStorageValue("reader_ext_background_color", reader_ext_background_color_active);
@@ -2091,6 +2102,20 @@ function optionsReaderComponents(doc) {
         //console.log("CUSTOM LINK SAVED - ", reader_ext_link_color_active);
         previousLinkColor = reader_ext_link_color_active;
         link_color_changed = false;
+      }
+
+      if(link_color_changed){
+        saveStorageValue("reader_ext_link_color", reader_ext_link_color_active);
+        //console.log("CUSTOM LINK SAVED - ", reader_ext_link_color_active);
+        previousLinkColor = reader_ext_link_color_active;
+        link_color_changed = false;
+      }
+
+      if(dark_scrollbar_changed){
+        saveStorageValue("reader_ext_dark_scrollbar", reader_ext_dark_scrollbar_active);
+        //console.log("CUSTOM LINK SAVED - ", reader_ext_link_color_active);
+        previousDarkScrollbar = reader_ext_dark_scrollbar_active;
+        dark_scrollbar_changed = false;
       }
     
     }
@@ -2303,6 +2328,50 @@ function markAsChanged(changedElement){
   }
   //console.log("changed value #", changedElement);
 }
+
+function toggleTheme(dark) {
+  const root = document.documentElement;
+  if (dark=== 'on') {
+    root.setAttribute('data-theme', 'dark');
+  } else {
+    root.setAttribute('data-theme', 'light');
+  }
+}
+
+function setDarkScroll(doc, dark='on', save=true) {
+  if(previousDarkScrollbar == null){
+    previousDarkScrollbar = dark;
+    //console.log("ReadTime: No previous data! Setting to - ", previousReadTime)
+    showThemeSave(doc, 0)
+
+  }
+  else if(previousReadTime != dark){
+    dark_scrollbar_changed = true;
+    //console.log("ReadTime: Change detected! Marked as changed! Previous:",previousReadTime," New:",status)
+    showThemeSave(doc, 0)
+  }
+  else if(previousReadTime == dark){
+    dark_scrollbar_changed = false;
+    //console.log("ReadTime: No change detected! Marked as unchanged! Previous:",previousReadTime," New:",status)
+    showThemeSave(doc, 0)
+  }
+  if (dark == "on") {
+    $(doc).find('#options-dark-scrollbar input').prop("checked", true);
+  } else {
+    $(doc).find('#options-dark-scrollbar input').prop("checked", false);
+  }
+  
+  toggleTheme(dark)
+
+  if (save) {
+    reader_ext_dark_scrollbar = dark;
+    
+    saveStorageValue('reader_ext_dark_scrollbar', dark);
+    previousDarkScrollbar = dark;
+    
+  }
+}
+
 
 
 function init(){

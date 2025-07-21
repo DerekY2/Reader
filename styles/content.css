@@ -1,3 +1,9 @@
+:root {
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+}
 #reader-ext-content-container img,
 #reader-ext-content-container video,
 #reader-ext-iframe,
@@ -26,22 +32,6 @@
 #reader-ext-toolbar,
 .toast {
   font-weight: 500;
-}
-::-webkit-scrollbar {
-  display: block;
-  width: 7px;
-  border-radius: 20px;
-}
-::-webkit-scrollbar-track {
-  background: #5c5c5c;
-}
-::-webkit-scrollbar-thumb {
-  opacity: 0.4;
-  background-color: #999;
-  width: 20px;
-  border-radius: 20px;
-  border-right: none;
-  border-left: none;
 }
 #reader-ext-toolbar button:hover,
 .toast {
