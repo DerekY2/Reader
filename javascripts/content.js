@@ -1975,7 +1975,7 @@ function optionsReaderComponents(doc) {
     reader_ext_foreground_color_active = $(doc).find("#options-foreground-color input[name='foreground_color']").val().trim().toUpperCase();
     reader_ext_text_color_active = $(doc).find("#options-text-color input[name='text_color']").val().trim().toUpperCase();
     reader_ext_link_color_active = $(doc).find("#options-link-color input[name='link_color']").val().trim().toUpperCase();
-    reader_ext_dark_scrollbar_active = $(doc).find("#options-dark-scrollbar input[name='dark_scrollbar']").val().trim();
+    reader_ext_dark_scrollbar_active = getCheckboxStatus($(doc).find("#options-dark-scrollbar"))
     
     reader_ext_auto_dark_panel = getCheckboxStatus( $(doc).find("#options-dark-panel input") );
     reader_ext_display_footer = getCheckboxStatus( $(doc).find("#options-display-footer input") );
@@ -2113,7 +2113,7 @@ function optionsReaderComponents(doc) {
 
       if(dark_scrollbar_changed){
         saveStorageValue("reader_ext_dark_scrollbar", reader_ext_dark_scrollbar_active);
-        //console.log("CUSTOM LINK SAVED - ", reader_ext_link_color_active);
+        console.log("CUSTOM SCROLL SAVED - ", reader_ext_dark_scrollbar_active);
         previousDarkScrollbar = reader_ext_dark_scrollbar_active;
         dark_scrollbar_changed = false;
       }
@@ -2338,21 +2338,21 @@ function toggleTheme(dark) {
   }
 }
 
-function setDarkScroll(doc, dark='on', save=true) {
+function setDarkScroll(doc, dark='on', save) {
   if(previousDarkScrollbar == null){
     previousDarkScrollbar = dark;
-    //console.log("ReadTime: No previous data! Setting to - ", previousReadTime)
+    console.log("darkScroll: No previous data! Setting to - ", previousDarkScrollbar)
     showThemeSave(doc, 0)
 
   }
-  else if(previousReadTime != dark){
+  else if(previousDarkScrollbar != dark){
     dark_scrollbar_changed = true;
-    //console.log("ReadTime: Change detected! Marked as changed! Previous:",previousReadTime," New:",status)
+    console.log("ReadTime: Change detected! Marked as changed! Previous:",previousDarkScrollbar," New:",dark)
     showThemeSave(doc, 0)
   }
-  else if(previousReadTime == dark){
+  else if(previousDarkScrollbar == dark){
     dark_scrollbar_changed = false;
-    //console.log("ReadTime: No change detected! Marked as unchanged! Previous:",previousReadTime," New:",status)
+    console.log("darkscroll: No change detected! Marked as unchanged! Previous:",previousDarkScrollbar," New:",dark)
     showThemeSave(doc, 0)
   }
   if (dark == "on") {
