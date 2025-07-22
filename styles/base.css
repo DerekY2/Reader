@@ -9,36 +9,10 @@
 .material-icons{font-family:"Material Icons";font-weight:400;font-style:normal;font-size:20px;line-height:1;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:"liga"}
 
 /***** Lora Fonts *****/
-@font-face{font-family:Lora;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-Regular.ttf);font-style:normal;font-weight:normal}@font-face{font-family:Lora-Italic;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-Italic.ttf);font-style:italic;font-weight:normal}@font-face{font-family:Lora-Bold;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-Bold.ttf);font-weight:normal;font-style:normal}@font-face{font-family:Lora-BoldItalic;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-BoldItalic.ttf);font-weight:normal;font-style:italic}
+@font-face{font-family:Lora;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-Regular.ttf);font-style:normal;font-weight:normal}@font-face{font-family:Lora-Italic;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-Italic.ttf);font-style:italic;font-weight:normal}@font-face{font-family:Lora-Bold;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-Bold.ttf);font-weight:700;font-style:normal}@font-face{font-family:Lora-BoldItalic;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lora/Lora-BoldItalic.ttf);font-weight:normal;font-style:italic}
 
 /***** Lexend Fonts *****/
-@font-face{font-family:LexendDeca;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendDeca.ttf);font-style:normal;font-weight:normal}@font-face{font-family:LexendExa;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendExa.ttf);font-style:normal;font-weight:normal}@font-face{font-family:LexendGiga;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendGiga.ttf);font-weight:normal;font-style:normal}@font-face{font-family:LexendMega;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendMega.ttf);font-weight:normal;font-style:normal}@font-face{font-family:LexendPeta;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendPeta.ttf);font-weight:normal;font-style:normal}@font-face{font-family:LexendTera;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendZetta.ttf);font-weight:normal;font-style:normal}
-
-@font-face {
-  font-family: 'Crimson';
-  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Crimson/CrimsonText-Regular.ttf);
-  font-style: normal;
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Crimson-Bold';
-  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Crimson/CrimsonText-Bold.ttf);
-  font-style: normal;
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'Crimson-Italic';
-  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Crimson/CrimsonText-Italic.ttf);
-  font-style: italic;
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'Crimson-BoldItalic';
-  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Crimson/CrimsonText-BoldItalic.ttf);
-  font-style: italic;
-  font-weight: 700;
-}
+@font-face{font-family:LexendDeca;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendDeca.ttf);font-style:normal;font-weight:normal}@font-face{font-family:LexendExa;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendExa.ttf);font-style:normal;font-weight:normal}@font-face{font-family:LexendGiga;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendGiga.ttf);font-weight:normal;font-style:normal}@font-face{font-family:LexendMega;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendMega.ttf);font-weight:normal;font-style:normal}@font-face{font-family:LexendPeta;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendPeta.ttf);font-weight:normal;font-style:normal}@font-face{font-family:LexendTera;src:url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Lexend/LexendTera.ttf);font-weight:normal;font-style:normal}
 
 @font-face {
   font-family: 'iowan-old';
@@ -49,7 +23,7 @@
 @font-face {
   font-family: 'iowan-old-bold';
   src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/IowanOld/iowan-old-bold.ttf);
-  font-style: italic;
+  font-style: normal;
   font-weight: 700;
 }
 @font-face {
@@ -80,6 +54,35 @@
   src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Times/times.ttf);
   font-style: normal;
   font-weight: 400;
+}
+
+/* Variable Fonts with Full Weight Support */
+@font-face {
+  font-family: 'Crimson_Pro';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Crimson_Pro/CrimsonPro-VariableFont_wght.ttf);
+  font-style: normal;
+  font-weight: 200 900;
+}
+
+@font-face {
+  font-family: 'JetBrains_Mono';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/JetBrains_Mono/JetBrainsMono-VariableFont_wght.ttf);
+  font-style: normal;
+  font-weight: 100 800;
+}
+
+@font-face {
+  font-family: 'Source_Sans_3';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Source_Sans_3/SourceSans3-VariableFont_wght.ttf);
+  font-style: normal;
+  font-weight: 200 900;
+}
+
+@font-face {
+  font-family: 'Work_Sans';
+  src: url(chrome-extension://__MSG_@@extension_id__/assets/fonts/Work_Sans/WorkSans-VariableFont_wght.ttf);
+  font-style: normal;
+  font-weight: 100 900;
 }
 
 /***** Truncate words *****/

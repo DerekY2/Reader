@@ -4,6 +4,7 @@ var title, excerpt, content,article_url,author,reading_time,tag_list, lastLogTim
 var reader_ext_theme = "custom-theme";
 var reader_ext_font_family = "Arial";
 var reader_ext_font_size = 16;
+var reader_ext_font_weight = 400;
 var reader_ext_line_height = 1;
 var reader_ext_letter_space = 0;
 var reader_ext_max_width = 680;
@@ -141,6 +142,7 @@ var reader_ext_display_reading_time = "on";
 
 var font_family_changed;
 var font_size_changed;
+var font_weight_changed;
 var line_height_changed;
 var letter_space_changed;
 var max_width_changed;
@@ -178,6 +180,7 @@ var previousDarkScrollbar
 
 var previousFontFamily;
 var previousFontSize;
+var previousFontWeight;
 var previousLineHeight;
 var previousLetterSpace;
 var previousMaxWidth;
@@ -848,6 +851,32 @@ function setFontSize(doc, val, save) {
   $(doc).find("#options-font-size input").val(  val );
   $(doc).find("#options-font-size .val").text(  val );
 }
+function setFontWeight(doc, val, save) {
+  
+  if(previousFontWeight == null){
+    previousFontWeight = val;
+    //console.log("Font weight: No previous data! Setting to - ", previousFontWeight)
+    showStyleSave(doc)
+  }
+  else if(previousFontWeight != val){
+    font_weight_changed = true;
+    //console.log("Font weight: Change detected! Marked as changed! Previous:",previousFontWeight," New:",val)
+    showStyleSave(doc)
+  }
+  else if(previousFontWeight == val){
+    font_weight_changed = false;
+    //console.log("Font weight: No change detected! Marked as unchanged! Previous:",previousFontWeight," New:",val)
+    showStyleSave(doc)
+  }
+
+    reader_ext_font_weight = val;
+    if(save){
+    saveStorageValue('reader_ext_font_weight', val);
+    }
+    //console.log('changing weight to:', val)
+    $(doc).find("#reader-ext-content-container").css( "font-weight", val);
+    $(doc).find(`#options-font-weight select option[value='${val}']`).prop('selected', true);
+}
 function setLineHeight(doc, val, save) {
 
   if(previousLineHeight == null){
@@ -1232,7 +1261,7 @@ function setTheme(doc, val, save){
     setLinkColor(doc, reader_ext_link_color.toUpperCase(), "custom-theme");
     reader_ext_dark_scrollbar_active = getCheckboxStatus($(doc).find("#options-dark-scrollbar input"))
     reader_ext_dark_scrollbar = reader_ext_dark_scrollbar_active;
-    console.log("active dark scroll:",reader_ext_dark_scrollbar)
+    // console.log("active dark scroll:",reader_ext_dark_scrollbar)
     setDarkScroll(doc, reader_ext_dark_scrollbar)
     tempDarkScroll=reader_ext_dark_scrollbar
     //console.log("CHANGED TO CUSTOM THEME")
@@ -1608,6 +1637,7 @@ function optionsDefaultSettings(doc) {
   // Options Style
   chrome.storage.sync.get(['reader_ext_font_family'],function(result){setFontFamily(doc, (result.reader_ext_font_family) ? result.reader_ext_font_family : 'Arial', true) });
   chrome.storage.sync.get(['reader_ext_font_size'],function(result){setFontSize(doc, (result.reader_ext_font_size) ? result.reader_ext_font_size : 16, true) });
+  chrome.storage.sync.get(['reader_ext_font_weight'],function(result){setFontWeight(doc, (result.reader_ext_font_weight) ? result.reader_ext_font_weight : 400, true) });
   chrome.storage.sync.get(['reader_ext_line_height'],function(result){setLineHeight(doc, (result.reader_ext_line_height) ? result.reader_ext_line_height : 1.84, true) });
   chrome.storage.sync.get(['reader_ext_letter_space'],function(result){setLetterSpace(doc, (result.reader_ext_letter_space) ? result.reader_ext_letter_space : 0, true) });
   chrome.storage.sync.get(['reader_ext_max_width'],function(result){setMaxWidth(doc, (result.reader_ext_max_width) ? result.reader_ext_max_width : 680, true) });
@@ -1644,7 +1674,7 @@ function optionsDefaultSettings(doc) {
   chrome.storage.sync.get(['reader_ext_link_color'],function(result){ setLinkColor(doc, (result.reader_ext_link_color ? result.reader_ext_link_color : "#5F6368"), "custom-theme", true) });
   // Theme (need to be down here bcoz setTheme requires themes' values)
   //console.log("Getting theme...")
-  chrome.storage.sync.get(['reader_ext_dark_scrollbar'],function(result){setDarkScroll(doc, result.reader_ext_dark_scrollbar ? result.reader_ext_dark_scrollbar : "on");console.log('scrollbar sync:',result.reader_ext_dark_scrollbar) });
+  chrome.storage.sync.get(['reader_ext_dark_scrollbar'],function(result){setDarkScroll(doc, result.reader_ext_dark_scrollbar ? result.reader_ext_dark_scrollbar : "on"); });
   chrome.storage.sync.get(['reader_ext_theme'],function(result){ setTheme(doc, (result.reader_ext_theme ? result.reader_ext_theme : "custom-theme"), false);})
   chrome.storage.sync.get(['reader_ext_dark_scrollbar'],function(result){setDarkScroll(doc, result.reader_ext_dark_scrollbar ? result.reader_ext_dark_scrollbar : "on") });
 
@@ -1761,6 +1791,7 @@ function optionsStyle(doc) {
   // Listeners
   $(doc).find("#options-font-family select").change(function() { setFontFamily(doc, $(this).val()); });
   $(doc).find("#options-font-size input").on("input change", function() { setFontSize(doc, $(this).val()); });
+  $(doc).find("#options-font-weight select").change(function() { setFontWeight(doc, $(this).val()); });
   $(doc).find("#options-line-height input").on("input change", function() { setLineHeight(doc, $(this).val()); });
   $(doc).find("#options-letter-space input").on("input change", function() { setLetterSpace(doc, $(this).val()); });
   $(doc).find("#options-max-width input").on("input change", function() { setMaxWidth(doc, $(this).val()); });
@@ -1790,7 +1821,7 @@ var optionsSaveTimeout;
 function showThemeSave(doc){
   
   
-  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
+  if(font_family_changed || font_size_changed || font_weight_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
     updateSaveButtonTheme(doc)
     $(doc).find(".options-panel-content button[name='save-options-style']").show();
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1823,7 +1854,7 @@ function showStyleSave(doc){
   
 
   
-  if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
+  if(font_family_changed || font_size_changed || font_weight_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
     updateSaveButtonTheme(doc)
     $(doc).find(".options-panel-content button[name='save-options-style']").show();
     $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1858,7 +1889,7 @@ function showOptionsSave(doc){
   
 
   
-    if(font_family_changed || font_size_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
+    if(font_family_changed || font_size_changed || font_weight_changed || line_height_changed || letter_space_changed || max_width_changed || margin_changed || dark_panel_changed || footer_changed || outline_changed || images_changed || meta_changed || author_changed || read_time_changed || background_color_changed || foreground_color_changed || link_color_changed || text_color_changed || dark_scrollbar_changed){
       updateSaveButtonTheme(doc)
       $(doc).find(".options-panel-content button[name='save-options-style']").show();
       $(doc).find(".options-panel-content button[name='save-options-themes']").show();
@@ -1974,6 +2005,7 @@ function optionsReaderComponents(doc) {
     
     reader_ext_font_family = $(doc).find("#options-font-family select").find(":selected").val();
     reader_ext_font_size = $(doc).find("#options-font-size input").val().trim();
+    reader_ext_font_weight = $(doc).find("#options-font-weight select").find(":selected").val();
     reader_ext_line_height = $(doc).find("#options-line-height input").val().trim();
     reader_ext_letter_space = $(doc).find("#options-letter-space input").val().trim();
     reader_ext_max_width = $(doc).find("#options-max-width input").val().trim();
@@ -2011,6 +2043,13 @@ function optionsReaderComponents(doc) {
       //console.log("font size sved - ", reader_ext_font_size);
       previousFontSize = reader_ext_font_size;
       font_size_changed = false;
+    }else{};
+
+    if(font_weight_changed){
+      saveStorageValue("reader_ext_font_weight", reader_ext_font_weight);
+      //console.log("font weight saved - ", reader_ext_font_weight);
+      previousFontWeight = reader_ext_font_weight;
+      font_weight_changed = false;
     }else{};
 
     if(line_height_changed){
@@ -2086,7 +2125,7 @@ function optionsReaderComponents(doc) {
       reader_ext_link_color_custom = reader_ext_link_color_active;
       reader_ext_dark_scrollbar_active = getCheckboxStatus($(doc).find("#options-dark-scrollbar input"))
       reader_ext_dark_scrollbar = reader_ext_dark_scrollbar_active;
-      console.log("active dark scroll:",reader_ext_dark_scrollbar)
+      // console.log("active dark scroll:",reader_ext_dark_scrollbar)
       
       if(background_color_changed){
         saveStorageValue("reader_ext_background_color", reader_ext_background_color_active);
@@ -2125,7 +2164,7 @@ function optionsReaderComponents(doc) {
 
       if(dark_scrollbar_changed){
         saveStorageValue("reader_ext_dark_scrollbar", reader_ext_dark_scrollbar_active);
-        console.log("CUSTOM SCROLL SAVED - ", reader_ext_dark_scrollbar_active);
+        // console.log("CUSTOM SCROLL SAVED - ", reader_ext_dark_scrollbar_active);
         previousDarkScrollbar = reader_ext_dark_scrollbar_active;
         dark_scrollbar_changed = false;
       }
@@ -2346,31 +2385,31 @@ function toggleTheme(doc, dark) {
 
   if (dark=== 'on') {
     $(doc).find('head').append("<link rel='stylesheet' type='text/css' href='"+url+"'>");
-    console.log('toggleTheme on')
+    // console.log('toggleTheme on')
 
   } else {
     $(doc).find(`link[href="${url}"]`).remove();
-    console.log('toggleTheme off')
+    //console.log('toggleTheme off')
   }
 
-  console.log('toggleTheme:',dark)
+  //console.log('toggleTheme:',dark)
 }
 
 function setDarkScroll(doc, dark, save) {
   if(previousDarkScrollbar == null){
     previousDarkScrollbar = dark;
-    console.log("darkScroll: No previous data! Setting to - ", previousDarkScrollbar)
+    //console.log("darkScroll: No previous data! Setting to - ", previousDarkScrollbar)
     showThemeSave(doc, 0)
 
   }
   else if(previousDarkScrollbar != dark){
     dark_scrollbar_changed = true;
-    console.log("ReadTime: Change detected! Marked as changed! Previous:",previousDarkScrollbar," New:",dark)
+    //console.log("ReadTime: Change detected! Marked as changed! Previous:",previousDarkScrollbar," New:",dark)
     showThemeSave(doc, 0)
   }
   else if(previousDarkScrollbar == dark){
     dark_scrollbar_changed = false;
-    console.log("darkscroll: No change detected! Marked as unchanged! Previous:",previousDarkScrollbar," New:",dark)
+    //console.log("darkscroll: No change detected! Marked as unchanged! Previous:",previousDarkScrollbar," New:",dark)
     showThemeSave(doc, 0)
   }
   if (dark == "on") {
@@ -2491,17 +2530,17 @@ var latest_url;
 // var readerActive
 function launch() {
   var existing = document.querySelector('#reader-ext-iframe');
-  console.log('existing iframe:', existing);
+  //console.log('existing iframe:', existing);
 
   // Detect past iframe - don't show another
   if (existing == null) {
-    console.log('No iframe found');
+    //console.log('No iframe found');
     // Create iframe and append to body
     iframe = createIframe();
     document.body.appendChild(iframe);
     latest_url = window.location.href;
     init();
-    console.log('created iframe')
+    //console.log('created iframe')
     // readerActive = true
   } else {
     removeIframe()

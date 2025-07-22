@@ -1,5 +1,3 @@
-<head>
-</head>
 <div id="reader-ext-body" style="display: none;position:relative;">
   <!-- Outline -->
   <div id="reader-ext-outline" class="reader-ext-sidebar-section no-print main-stuff">
@@ -8,7 +6,7 @@
     </ul>
   </div>
 
-  <div class="main-stuff" id="reader-ext-container">
+  <div class="main-stuff" id="reader-ext-container" style="overflow: hidden;">
     <!-- Saved notice -->
     <div id="reader-ext-saved-notice" style="display:none;">
       <i class='fas fa-check-circle m-r-3'></i> Saved
@@ -57,43 +55,38 @@
           <label class="float-left">Font Style</label>
           <select class="float-right">
             <option value="Arial">Arial</option>
-            <option value="Arial Black">Arial Black</option>
             <option value="Athelas">Athelas</option>
             <option value="Comic Sans MS">Comic Sans MS</option>
             <option value="Constantia">Constantia</option>
-            <option value="Courier New">Courier New</option>
             <option value="Courier">Courier</option>
-            <option value="Crimson">Crimson</option>
-            <option value="Crimson-Bold">Crimson Bold</option>
-            <option value="Crimson-Italic">Crimson Italic</option>
-            <option value="Crimson-BoldItalic">Crimson BoldItalic</option>
+            <option value="Courier New">Courier New</option>
+            <option value="Crimson_Pro">Crimson Pro</option>
             <option value="Georgia">Georgia</option>
             <option value="Impact">Impact</option>
+            <option value="Inter">Inter</option>
             <option value="iowan-old">Iowan Old Style</option>
             <option value="iowan-old-bold">Iowan Old Style Bold</option>
-            <option value="iowan-old-italic">Iowan Old Style Italic</option>
             <option value="iowan-old-bold-italic">Iowan Old Style BoldItalic</option>
-            <option value="sans-serif">Sans-serif</option>
-            <option value="Sitka Text">Sitka Text</option>
-            <option value="Times-New-Roman">Times New Roman</option>
-            <option value="Trebuchet MS">Trebuchet MS</option>
-            <option value="OpenDyslexic">OpenDyslexic</option>
-            <option value="OpenDyslexic-Mono">OpenDyslexic Mono</option>
-            <option value="OpenDyslexic-Bold">OpenDyslexic Bold</option>
-            <option value="OpenDyslexic-Italic">OpenDyslexic Italic</option>
-            <option value="OpenDyslexic-BoldItalic">OpenDyslexic BoldItalic</option>
-            <option value="LexendDeca">LexendDeca</option>
-            <option value="LexendExa">Lexend Exa</option>
-            <option value="LexendGiga">Lexend Giga</option>
+            <option value="iowan-old-italic">Iowan Old Style Italic</option>
+            <option value="JetBrains_Mono">JetBrains Mono</option>
+            <option value="LexendDeca">Lexend Deca</option>
             <option value="LexendMega">Lexend Mega</option>
-            <option value="LexendPeta">Lexend Peta</option>
-            <option value="LexendTera">Lexend Tera</option>
-            <option value="LexendZetta">Lexend Zetta</option>
             <option value="Lora">Lora</option>
             <option value="Lora-Bold">Lora Bold</option>
-            <option value="Lora-Italic">Lora Italic</option>
             <option value="Lora-BoldItalic">Lora BoldItalic</option>
+            <option value="Lora-Italic">Lora Italic</option>
+            <option value="OpenDyslexic">OpenDyslexic</option>
+            <option value="OpenDyslexic-Bold">OpenDyslexic Bold</option>
+            <option value="OpenDyslexic-BoldItalic">OpenDyslexic BoldItalic</option>
+            <option value="OpenDyslexic-Italic">OpenDyslexic Italic</option>
+            <option value="OpenDyslexic-Mono">OpenDyslexic Mono</option>
+            <option value="sans-serif">Sans-serif</option>
+            <option value="Sitka Text">Sitka Text</option>
+            <option value="Source_Sans_3">Source Sans 3</option>
+            <option value="Times-New-Roman">Times New Roman</option>
+            <option value="Trebuchet MS">Trebuchet MS</option>
             <option value="Verdana">Verdana</option>
+            <option value="Work_Sans">Work Sans</option>
           </select>
         </div>
 
@@ -104,10 +97,10 @@
               <input type="number" class="val" value="680" autocomplete="off"   />
             </div>
           </div>
-          <div id="options-font-size" class="section-split section-split-right">
-            <label class="float-left">Font<br/>Size</label>
+          <div id="options-margin" class="section-split section-split-right">
+            <label class="float-left label-inline-block m-t-18i">Margin</label>
             <div class="input-label input-label-px float-right">
-              <input type="number" class="val" value="14" autocomplete="off"  />
+              <input type="number" class="val" value="40" autocomplete="off"  />
             </div>
           </div>
         </div>
@@ -128,10 +121,28 @@
         </div>
 
         <div class="options-panel-content-section options-with-slider">
-          <div id="options-margin" class="section-split section-split-left">
-            <label class="float-left label-inline-block m-t-18i">Margin</label>
+          <div id="options-font-size" class="section-split section-split-left">
+            <label class="float-left">Font<br/>Size</label>
             <div class="input-label input-label-px float-right">
-              <input type="number" class="val" value="40" autocomplete="off"  />
+              <input type="number" class="val" value="14" autocomplete="off"  />
+            </div>
+          </div>
+          <div class="options-panel-content-section options-with-slider">
+            <div id="options-font-weight" class="section-split section-split-right">
+              <label class="float-left">Font<br/>Weight</label>
+              <div class="input-label float-right">
+                <select class="val" style="background: #f8f9fa; border-radius: 4px; border: 2px solid transparent; padding: 3px; height: 35px; font-size: 12px; width: 120%; position: relative; outline: 0;">
+                  <option value="100">100 Light</option>
+                  <option value="200">200</option>
+                  <option value="300">300</option>
+                  <option value="400" selected>400 Normal</option>
+                  <option value="500">500</option>
+                  <option value="600">600</option>
+                  <option value="700">700</option>
+                  <option value="800">800</option>
+                  <option value="900">900 Heavy</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
