@@ -2346,10 +2346,14 @@ function toggleTheme(doc, dark) {
 
   if (dark=== 'on') {
     $(doc).find('head').append("<link rel='stylesheet' type='text/css' href='"+url+"'>");
+    console.log('toggleTheme on')
+
   } else {
     $(doc).find(`link[href="${url}"]`).remove();
+    console.log('toggleTheme off')
   }
-  console.log("dark:",dark," | date-theme:",root.getAttribute('data-theme'))
+
+  console.log('toggleTheme:',dark)
 }
 
 function setDarkScroll(doc, dark, save) {
@@ -2376,7 +2380,6 @@ function setDarkScroll(doc, dark, save) {
   }
   
   toggleTheme(doc, dark)
-  toggleTheme(dark)
 
   if (save) {
     reader_ext_dark_scrollbar = dark;

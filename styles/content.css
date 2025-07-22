@@ -1,9 +1,3 @@
-:root {
-  color-scheme: dark;
-}
-:root[data-theme='light'] {
-  color-scheme: light;
-}
 #reader-ext-content-container img,
 #reader-ext-content-container video,
 #reader-ext-iframe,
